@@ -1,0 +1,23 @@
+{
+  "name": "@aep/contracts",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "bun test tests",
+    "lint": "biome check src tests"
+  },
+  "dependencies": {
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@aep/typescript-config": "workspace:*",
+    "bun-types": "^1.2.16",
+    "typescript": "^5.8.3"
+  }
+}

@@ -6,10 +6,11 @@ Every public claim must link to code, test, report, screenshot, or demo. Until t
 | --- | --- | --- |
 | Stateful agent with human interrupt/resume | planned | `packages/agent` + restart/resume test |
 | Hybrid FTS + pgvector retrieval | planned | `packages/retrieval` + offline eval report |
-| Citation allowlist fails closed | planned | invalid-citation fixture + gate tests |
+| Citation allowlist fails closed | partial | `@aep/contracts` helper + unit tests; full gate + fixture demo still planned |
 | Append-only audit trail | planned | approve/edit/reject E2E + event hash tests |
 | Idempotent durable jobs | planned | duplicate-trigger + replay tests |
-| Offline demo without provider credentials | planned | `bun run demo` + `eval:offline` |
+| Offline demo without provider credentials | planned | `bun run demo` (AEP-03–AEP-07) |
+| Workspace verify without credentials | verified | `bun run verify` + GitHub Actions `verify` workflow |
 | Production customer deployment | **prohibited** | — |
 | SOC 2 / security certification | **prohibited** | — |
 | Live-model quality from offline report | **prohibited** | offline reports prove harness only |

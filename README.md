@@ -12,6 +12,7 @@ A stateful TypeScript reference implementation that turns public or synthetic so
 [Run it locally](#run-it-locally) · [See the architecture](#architecture) · [Inspect the evidence](#evidence-map) · [Read the limitations](#status-and-limitations)
 
 ![Status](https://img.shields.io/badge/status-building_v0.1-8D9088)
+![CI](https://github.com/moisestech/agentic-evidence-pipeline/actions/workflows/verify.yml/badge.svg)
 ![Offline demo](https://img.shields.io/badge/demo-planned-8D9088)
 
 </div>
@@ -104,19 +105,20 @@ cd agentic-evidence-pipeline
 bun install --frozen-lockfile
 bun run bootstrap
 bun run doctor
-bun run demo
+bun run verify
 ```
 
-> **Status:** these commands are declared as placeholders in `package.json`. They become executable as AEP-01 through AEP-12 land. Prefer `docs/ARCHITECTURE.md` and the evidence map until `doctor` and `demo` pass on a fresh clone.
+> **Status (AEP-01):** workspace install, `bootstrap`, `doctor`, and `verify` work. `demo` and `eval:*` still exit until later tasks. Prefer `docs/ARCHITECTURE.md` and the evidence map for product behavior that is not implemented yet.
 
 The default demo will use the deterministic fake provider. A live-provider evaluation is a separate, explicit command and is never required for tests or CI.
 
-### Verification (planned)
+### Verification
 
 ```bash
 bun run verify
-bun run eval:offline
 ```
+
+`verify` runs format check, lint, typecheck, and tests across the Turborepo workspace (no provider credentials). `bun run eval:offline` lands with AEP-09.
 
 ## Run lifecycle
 

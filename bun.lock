@@ -1,0 +1,206 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "agentic-evidence-pipeline",
+      "devDependencies": {
+        "@biomejs/biome": "^2.1.2",
+        "bun-types": "^1.2.16",
+        "turbo": "^2.5.4",
+        "typescript": "^5.8.3",
+      },
+    },
+    "apps/api": {
+      "name": "@aep/api",
+      "version": "0.0.1",
+      "dependencies": {
+        "@aep/contracts": "workspace:*",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "apps/web": {
+      "name": "@aep/web",
+      "version": "0.0.1",
+      "dependencies": {
+        "@aep/contracts": "workspace:*",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/agent": {
+      "name": "@aep/agent",
+      "version": "0.0.1",
+      "dependencies": {
+        "@aep/contracts": "workspace:*",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/connectors": {
+      "name": "@aep/connectors",
+      "version": "0.0.1",
+      "dependencies": {
+        "@aep/contracts": "workspace:*",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/contracts": {
+      "name": "@aep/contracts",
+      "version": "0.0.1",
+      "dependencies": {
+        "zod": "^4.0.5",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/db": {
+      "name": "@aep/db",
+      "version": "0.0.1",
+      "dependencies": {
+        "@aep/contracts": "workspace:*",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/evals": {
+      "name": "@aep/evals",
+      "version": "0.0.1",
+      "dependencies": {
+        "@aep/contracts": "workspace:*",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/prompts": {
+      "name": "@aep/prompts",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/retrieval": {
+      "name": "@aep/retrieval",
+      "version": "0.0.1",
+      "dependencies": {
+        "@aep/contracts": "workspace:*",
+      },
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/telemetry": {
+      "name": "@aep/telemetry",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/testkit": {
+      "name": "@aep/testkit",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@aep/typescript-config": "workspace:*",
+        "bun-types": "^1.2.16",
+        "typescript": "^5.8.3",
+      },
+    },
+    "packages/typescript-config": {
+      "name": "@aep/typescript-config",
+      "version": "0.0.1",
+    },
+  },
+  "packages": {
+    "@aep/agent": ["@aep/agent@workspace:packages/agent"],
+
+    "@aep/api": ["@aep/api@workspace:apps/api"],
+
+    "@aep/connectors": ["@aep/connectors@workspace:packages/connectors"],
+
+    "@aep/contracts": ["@aep/contracts@workspace:packages/contracts"],
+
+    "@aep/db": ["@aep/db@workspace:packages/db"],
+
+    "@aep/evals": ["@aep/evals@workspace:packages/evals"],
+
+    "@aep/prompts": ["@aep/prompts@workspace:packages/prompts"],
+
+    "@aep/retrieval": ["@aep/retrieval@workspace:packages/retrieval"],
+
+    "@aep/telemetry": ["@aep/telemetry@workspace:packages/telemetry"],
+
+    "@aep/testkit": ["@aep/testkit@workspace:packages/testkit"],
+
+    "@aep/typescript-config": ["@aep/typescript-config@workspace:packages/typescript-config"],
+
+    "@aep/web": ["@aep/web@workspace:apps/web"],
+
+    "@biomejs/biome": ["@biomejs/biome@2.5.8", "https://registry.npmmirror.com/@biomejs/biome/-/biome-2.5.8.tgz", { "optionalDependencies": { "@biomejs/cli-darwin-arm64": "2.5.8", "@biomejs/cli-darwin-x64": "2.5.8", "@biomejs/cli-linux-arm64": "2.5.8", "@biomejs/cli-linux-arm64-musl": "2.5.8", "@biomejs/cli-linux-x64": "2.5.8", "@biomejs/cli-linux-x64-musl": "2.5.8", "@biomejs/cli-win32-arm64": "2.5.8", "@biomejs/cli-win32-x64": "2.5.8" }, "bin": { "biome": "bin/biome" } }, "sha512-aeAeeJB9fSDc7Gq+2GqpQxA0qBj6gj1k2R6L1cYqGePKP/baIq1WX8y6B+D+nRsO5ViQL22K/8IwbqERW0q1nw=="],
+
+    "@biomejs/cli-darwin-arm64": ["@biomejs/cli-darwin-arm64@2.5.8", "https://registry.npmmirror.com/@biomejs/cli-darwin-arm64/-/cli-darwin-arm64-2.5.8.tgz", { "os": "darwin", "cpu": "arm64" }, "sha512-mk1QON9PHllvvLN5gU3f4rMxeh4syK5p9OvKyWH6/W8ueh04uaC8TUXXByhGufWf/y5mQc03ZLM45zU+cmqMjA=="],
+
+    "@biomejs/cli-darwin-x64": ["@biomejs/cli-darwin-x64@2.5.8", "https://registry.npmmirror.com/@biomejs/cli-darwin-x64/-/cli-darwin-x64-2.5.8.tgz", { "os": "darwin", "cpu": "x64" }, "sha512-bsGwFMBNyHPyiLSsQcZJxdoRrg1V4JL+d7wEsvUBczlP9U9lwM+7mzQHxI4o1mhBsTmdOBbAb6fHU3Z3snN45w=="],
+
+    "@biomejs/cli-linux-arm64": ["@biomejs/cli-linux-arm64@2.5.8", "https://registry.npmmirror.com/@biomejs/cli-linux-arm64/-/cli-linux-arm64-2.5.8.tgz", { "os": "linux", "cpu": "arm64" }, "sha512-XmFiA0WPYFC+uiUDC8WRFzAIH9bo7vwQLav38Uoq4ETC+T/+uBi0TsYGJECkugY3r8USl3jc+Ae2/irAF6F2lQ=="],
+
+    "@biomejs/cli-linux-arm64-musl": ["@biomejs/cli-linux-arm64-musl@2.5.8", "https://registry.npmmirror.com/@biomejs/cli-linux-arm64-musl/-/cli-linux-arm64-musl-2.5.8.tgz", { "os": "linux", "cpu": "arm64" }, "sha512-VcJNbstduTHx83NGAdhp78/JOcP45BZHXL7yNsfI1uGzdUgegAz2s+mSoT7wK6PBNzLoqG0zDOXaz/RQYVtSiw=="],
+
+    "@biomejs/cli-linux-x64": ["@biomejs/cli-linux-x64@2.5.8", "https://registry.npmmirror.com/@biomejs/cli-linux-x64/-/cli-linux-x64-2.5.8.tgz", { "os": "linux", "cpu": "x64" }, "sha512-S5wcm9OBDvLHodD4PUaN488hCpco9QD/9ZxuYJiw4euWtr/oQvLR72z2ixItH8Wd5BCm6FZaeb+YNvOoM1xHtQ=="],
+
+    "@biomejs/cli-linux-x64-musl": ["@biomejs/cli-linux-x64-musl@2.5.8", "https://registry.npmmirror.com/@biomejs/cli-linux-x64-musl/-/cli-linux-x64-musl-2.5.8.tgz", { "os": "linux", "cpu": "x64" }, "sha512-kKmiyokeISRGq2FLwvr+TzsgBusfxaZ0FZNLcOYOpCK/78tRrEjeEBLvq3xLZMpqbANgJdRPI7vZX8ZL37u9/w=="],
+
+    "@biomejs/cli-win32-arm64": ["@biomejs/cli-win32-arm64@2.5.8", "https://registry.npmmirror.com/@biomejs/cli-win32-arm64/-/cli-win32-arm64-2.5.8.tgz", { "os": "win32", "cpu": "arm64" }, "sha512-nILH0mzm3Hi3iEdd7o7GpB8kBR/mSQwfQG/tyBqyNrY2GFtcgwfV9nV8xLmbtUpMNY/Oi0Ml1XgfR4flOdq+AA=="],
+
+    "@turbo/darwin-64": ["@turbo/darwin-64@2.10.9", "https://registry.npmmirror.com/@turbo/darwin-64/-/darwin-64-2.10.9.tgz", { "os": "darwin", "cpu": "x64" }, "sha512-Jh+pTGXLNz8+1tkUU13TI/f+ZOI+OvC4YbHi1H+57iSpLt5DR3xgptd+4sA07RdjdRR/RX/01uQQu2OkbzIefA=="],
+
+    "@turbo/darwin-arm64": ["@turbo/darwin-arm64@2.10.9", "https://registry.npmmirror.com/@turbo/darwin-arm64/-/darwin-arm64-2.10.9.tgz", { "os": "darwin", "cpu": "arm64" }, "sha512-aqtpPkiIC4IUas8Vv27oJ3aDfTuP1d5wofd01dZ7gfhHRrIKuFdqQb4imvNnVFahcOViF9Jh8Oi7feDoz8/ciA=="],
+
+    "@turbo/linux-64": ["@turbo/linux-64@2.10.9", "https://registry.npmmirror.com/@turbo/linux-64/-/linux-64-2.10.9.tgz", { "os": [ "linux", "android", ], "cpu": "x64" }, "sha512-XyAneUBsS5uNOUOjBSs81zyigMVwwhVUd3u7F2JFMKGQk6F7eNAiOEBASJ+aHLldjYsOEjhfW+5gWIqwziyFFw=="],
+
+    "@turbo/linux-arm64": ["@turbo/linux-arm64@2.10.9", "https://registry.npmmirror.com/@turbo/linux-arm64/-/linux-arm64-2.10.9.tgz", { "os": [ "linux", "android", ], "cpu": "arm64" }, "sha512-5jAcldLnkuWIjujGhCn2MGIeUwW8IVNOq9Sce4EEzzgLcxmhTasbV0RiW6ZkaRdOjmOCGzeNXPLkDJEOIucOLw=="],
+
+    "@turbo/windows-64": ["@turbo/windows-64@2.10.9", "https://registry.npmmirror.com/@turbo/windows-64/-/windows-64-2.10.9.tgz", { "os": "win32", "cpu": "x64" }, "sha512-u1xGpGlefzuhBedbt/VR2nWdftfFVZwPeDg9e5uZl68sV1fL3HNYTNr5VyHkzgtPK2VTYg1x4OKZuGrh1Gvhtg=="],
+
+    "@turbo/windows-arm64": ["@turbo/windows-arm64@2.10.9", "https://registry.npmmirror.com/@turbo/windows-arm64/-/windows-arm64-2.10.9.tgz", { "os": "win32", "cpu": "arm64" }, "sha512-W2Ub165Qv0iMFljbYKxxbZN+2dVSngnzEjQNEFXtnz5oJVx9XSypmNmUvMtuYMeZ3kdVC1zI7yd/rtuX+SDnbg=="],
+
+    "@types/node": ["@types/node@26.2.0", "https://registry.npmmirror.com/@types/node/-/node-26.2.0.tgz", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-5IviulTZeRNp2vAJ514cc/HUlY5nZ9fCbq9DMyC52BrhFZACo3nI0R7qBxhQmo/d27NFe96ur/b7Wwxklda+kg=="],
+
+    "bun-types": ["bun-types@1.3.14", "https://registry.npmmirror.com/bun-types/-/bun-types-1.3.14.tgz", { "dependencies": { "@types/node": "*" } }, "sha512-4N0ig0fEomHt5R0KCFWjovxow98rIoRwKolrYdCcknNwMekCXRnWEUvgu5soYV8QXtVsrUD8B95MBOZGPvr6KQ=="],
+
+    "turbo": ["turbo@2.10.9", "https://registry.npmmirror.com/turbo/-/turbo-2.10.9.tgz", { "optionalDependencies": { "@turbo/darwin-64": "2.10.9", "@turbo/darwin-arm64": "2.10.9", "@turbo/linux-64": "2.10.9", "@turbo/linux-arm64": "2.10.9", "@turbo/windows-64": "2.10.9", "@turbo/windows-arm64": "2.10.9" }, "bin": { "turbo": "bin/turbo" } }, "sha512-Yl9+ukxH+UmPtKidpDkjn82tvPoEvFNb9UACd9vUomN1Ft0cwl3rx0P8yC1D93W9EOsWRMjllvIDG8y25sFOog=="],
+
+    "typescript": ["typescript@5.9.3", "https://registry.npmmirror.com/typescript/-/typescript-5.9.3.tgz", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
+
+    "undici-types": ["undici-types@8.3.0", "https://registry.npmmirror.com/undici-types/-/undici-types-8.3.0.tgz", {}, "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="],
+
+    "zod": ["zod@4.4.3", "https://registry.npmmirror.com/zod/-/zod-4.4.3.tgz", {}, "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="],
+  }
+}

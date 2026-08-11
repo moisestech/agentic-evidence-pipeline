@@ -17,6 +17,7 @@ build/
 out/
 coverage/
 .cache/
+.turbo/
 *.tsbuildinfo
 
 # OS / editor

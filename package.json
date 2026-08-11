@@ -8,14 +8,25 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap": "echo \"bootstrap: planned — validates local deps and prepares fixture config\"",
-    "doctor": "echo \"doctor: planned — checks runtime, database, fake provider, worker, and API\"",
-    "demo": "echo \"demo: planned — seeded offline assessment with fake provider\"",
-    "verify": "echo \"verify: planned — format/lint/typecheck/unit/contract/integration\"",
-    "eval:offline": "echo \"eval:offline: planned — deterministic golden set with fake provider\"",
-    "eval:live": "echo \"eval:live: planned — explicit opt-in provider-backed eval\""
+    "bootstrap": "bun scripts/bootstrap.ts",
+    "doctor": "bun scripts/doctor.ts",
+    "demo": "bun scripts/demo.ts",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run test",
+    "eval:offline": "bun scripts/eval-offline.ts",
+    "eval:live": "bun scripts/eval-live.ts"
   },
-  "packageManager": "bun@1.2.19",
+  "devDependencies": {
+    "@biomejs/biome": "^2.1.2",
+    "bun-types": "^1.2.16",
+    "turbo": "^2.5.4",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "bun@1.2.16",
   "engines": {
     "bun": ">=1.2.0"
   },
