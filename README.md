@@ -103,12 +103,15 @@ The system does not “repair” an unsupported claim by inventing better prose.
 git clone https://github.com/moisestech/agentic-evidence-pipeline.git
 cd agentic-evidence-pipeline
 bun install --frozen-lockfile
+cp .env.example .env
+bun run db:up          # requires Docker Desktop
+bun run db:migrate
 bun run bootstrap
 bun run doctor
 bun run verify
 ```
 
-> **Status (AEP-01):** workspace install, `bootstrap`, `doctor`, and `verify` work. `demo` and `eval:*` still exit until later tasks. Prefer `docs/ARCHITECTURE.md` and the evidence map for product behavior that is not implemented yet.
+> **Status (AEP-02):** workspace install, Prisma schema/migrations, `bootstrap`, `doctor`, and `verify` work. Without `DATABASE_URL`, unit tests still pass and DB integration tests skip. `demo` and `eval:*` still exit until later tasks.
 
 The default demo will use the deterministic fake provider. A live-provider evaluation is a separate, explicit command and is never required for tests or CI.
 

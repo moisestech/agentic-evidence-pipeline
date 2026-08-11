@@ -5,7 +5,7 @@ Mapped from Miami Applied AI / FDE repo specs. Implement one numbered task at a 
 | ID | Status | Task | Verification |
 | --- | --- | --- | --- |
 | AEP-01 | done | Bun/Turborepo workspace + CI | `bun install --frozen-lockfile && bun run verify` |
-| AEP-02 | pending | Postgres/pgvector, Prisma, tenant tests | migration + isolation tests |
+| AEP-02 | done | Postgres/pgvector, Prisma, tenant tests | migration + isolation tests |
 | AEP-03 | pending | Fixture connectors + normalize/hash | connector contract tests |
 | AEP-04 | pending | Lexical/vector retrieval + fusion | retrieval baseline report |
 | AEP-05 | pending | LangGraph + interrupt/resume | restart/resume integration test |

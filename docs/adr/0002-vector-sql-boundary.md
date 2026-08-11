@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted (AEP-02)
 
 ## Context
 
@@ -10,9 +10,9 @@ Prisma does not cover every pgvector operation equally well. Hybrid retrieval ne
 
 ## Decision
 
-- Prisma owns relational models and migrations for supported tables.
-- Vector similarity queries live behind an isolated, documented SQL module in `packages/db`.
-- Lexical and vector paths share the same visibility filters before fusion.
+- Prisma owns relational models and migrations for supported tables, including an `Unsupported("vector")` embedding column on `EvidenceItem`.
+- Vector similarity queries and extension setup live in `packages/db/src/vector.ts`.
+- Lexical and vector paths must share the same visibility filters before fusion (AEP-04).
 
 ## Consequences
 

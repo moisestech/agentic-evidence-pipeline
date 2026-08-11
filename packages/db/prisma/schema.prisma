@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Multi-tenant boundary. All domain rows carry tenantId and are filtered before retrieval/prompting.
+model Tenant {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sources          Source[]
+  evidenceItems    EvidenceItem[]
+  controls         Control[]
+  assessmentRuns   AssessmentRun[]
+  reviewDecisions  ReviewDecision[]
+  auditEvents      AuditEvent[]
+}
+
+model Source {
+  id           String   @id @default(uuid()) @db.Uuid
+  tenantId     String   @db.Uuid
+  kind         String
+  locator      String
+  visibility   String
+  revision     String
+  contentHash  String
+  retrievedAt  DateTime
+  status       String
+  lastErrorCode String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tenant   Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  evidence EvidenceItem[]
+
+  @@index([tenantId, kind])
+  @@index([tenantId, contentHash])
+}
+
+model EvidenceItem {
+  id             String   @id @default(uuid()) @db.Uuid
+  sourceId       String   @db.Uuid
+  tenantId       String   @db.Uuid
+  text           String
+  contentHash    String
+  visibility     String
+  sourceRevision String
+  embeddingModel String?
+  /// pgvector column managed via isolated SQL (see vector.sql.ts). Prisma maps as Unsupported.
+  embedding      Unsupported("vector")?
+  createdAt      DateTime @default(now())
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  source Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, visibility])
+  @@index([tenantId, contentHash])
+  @@index([sourceId])
+}
+
+model Control {
+  id            String @id @default(uuid()) @db.Uuid
+  tenantId      String @db.Uuid
+  rubricVersion String
+  title         String
+  requirement   String
+  severity      String
+  retrievalText String
+  visibility    String
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, rubricVersion])
+}
+
+model AssessmentRun {
+  id               String    @id @default(uuid()) @db.Uuid
+  tenantId         String    @db.Uuid
+  rubricVersion    String
+  promptVersion    String
+  model            String
+  status           String
+  idempotencyKey   String
+  traceId          String
+  startedAt        DateTime  @default(now())
+  completedAt      DateTime?
+  latencyMs        Int?
+  inputTokens      Int?
+  outputTokens     Int?
+  estimatedCostUsd Float?
+  failureClass     String?
+  retryCount       Int       @default(0)
+
+  tenant            Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  controlAssessments ControlAssessment[]
+  reviewDecisions   ReviewDecision[]
+  auditEvents       AuditEvent[]
+
+  @@unique([tenantId, idempotencyKey])
+  @@index([tenantId, status])
+  @@index([traceId])
+}
+
+model ControlAssessment {
+  id                  String  @id @default(uuid()) @db.Uuid
+  runId               String  @db.Uuid
+  controlId           String
+  status              String
+  confidence          Float
+  summary             String
+  evidenceIds         String[] @db.Uuid
+  unsupportedClaims   String[]
+  requiresHumanReview Boolean
+
+  run AssessmentRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+}
+
+model ReviewDecision {
+  id         String   @id @default(uuid()) @db.Uuid
+  runId      String   @db.Uuid
+  tenantId   String   @db.Uuid
+  assessmentId String @db.Uuid
+  reviewerId String
+  decision   String
+  beforeHash String
+  afterHash  String
+  comment    String?
+  decidedAt  DateTime @default(now())
+
+  run    AssessmentRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  tenant Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, runId])
+}
+
+model AuditEvent {
+  id               String   @id @default(uuid()) @db.Uuid
+  runId            String   @db.Uuid
+  tenantId         String   @db.Uuid
+  traceId          String
+  eventType        String
+  actorType        String
+  redactedPayload  Json
+  previousEventHash String?
+  eventHash        String
+  createdAt        DateTime @default(now())
+
+  run    AssessmentRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  tenant Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, runId, createdAt])
+  @@index([traceId])
+}

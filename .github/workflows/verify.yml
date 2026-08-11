@@ -12,7 +12,23 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: aep
+          POSTGRES_PASSWORD: aep
+          POSTGRES_DB: aep
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U aep -d aep"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://aep:aep@localhost:5433/aep?schema=public
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,6 +40,12 @@ jobs:
 
       - name: Install
         run: bun install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: bun run db:generate
+
+      - name: Apply migrations
+        run: bun run db:migrate
 
       - name: Verify
         run: bun run verify

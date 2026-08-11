@@ -1,2 +1,13 @@
-/** Placeholder until AEP-02 Prisma/pgvector land. */
-export const PACKAGE_STATUS = "db-planned" as const;
+export { type AepPrismaClient, createPrismaClient } from "./client";
+export {
+  assertSameTenant,
+  listEvidenceForTenant,
+  TenantBoundaryError,
+} from "./tenant";
+export {
+  ensurePgvectorExtension,
+  similarEvidenceIds,
+  upsertEvidenceEmbedding,
+} from "./vector";
+
+export const PACKAGE_STATUS = "db-v0.0.2" as const;

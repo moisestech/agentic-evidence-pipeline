@@ -1,8 +1,12 @@
 #!/usr/bin/env bun
 /**
  * Health check for local AEP development.
- * Expands in later tasks to cover Postgres, fake provider, worker, and API.
  */
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
+const root = join(import.meta.dir, "..");
+
 const checks: Array<{ name: string; ok: boolean; detail: string }> = [
   {
     name: "bun",
@@ -11,8 +15,25 @@ const checks: Array<{ name: string; ok: boolean; detail: string }> = [
   },
   {
     name: "contracts-package",
-    ok: true,
+    ok: existsSync(join(root, "packages/contracts/package.json")),
     detail: "@aep/contracts present in workspace",
+  },
+  {
+    name: "prisma-schema",
+    ok: existsSync(join(root, "packages/db/prisma/schema.prisma")),
+    detail: "packages/db/prisma/schema.prisma",
+  },
+  {
+    name: "docker-compose",
+    ok: existsSync(join(root, "docker-compose.yml")),
+    detail: "docker-compose.yml for local Postgres/pgvector",
+  },
+  {
+    name: "database-url",
+    ok: true,
+    detail: process.env.DATABASE_URL
+      ? "DATABASE_URL set (integration tests enabled)"
+      : "DATABASE_URL unset (unit tests only; run db:up for integration)",
   },
 ];
 
@@ -27,5 +48,5 @@ if (failed) {
   process.exit(1);
 }
 
-console.log("doctor: AEP-01 skeleton checks passed.");
-console.log("doctor: database / provider / worker checks land in later AEP tasks.");
+console.log("doctor: AEP-02 checks passed.");
+console.log("doctor: provider / worker / API readiness land in later AEP tasks.");

@@ -16,7 +16,10 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run test",
+    "db:generate": "bun run --filter @aep/db db:generate",
+    "db:migrate": "bun run --filter @aep/db db:migrate",
+    "db:up": "docker compose up -d postgres",
+    "verify": "bun run db:generate && bun run format:check && bun run lint && bun run typecheck && bun run test",
     "eval:offline": "bun scripts/eval-offline.ts",
     "eval:live": "bun scripts/eval-live.ts"
   },
