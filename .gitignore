@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.bun/
+.turbo/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Build / cache
+dist/
+build/
+.next/
+out/
+coverage/
+.cache/
+*.tsbuildinfo
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs / local
+*.log
+tmp/
+.temp/
+
+# Provider / live eval artifacts (keep offline reports tracked)
+reports/live/

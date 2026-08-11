@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" role="img" aria-label="Agentic Evidence Pipeline lockup">
+  <title>Agentic Evidence Pipeline</title>
+  <rect width="360" height="96" fill="#F0EEE5"/>
+  <!-- Mark -->
+  <g transform="translate(8,8)">
+    <path d="M28 14 H18 V66 H28" fill="none" stroke="#10110F" stroke-width="3.5" stroke-linecap="square"/>
+    <path d="M68 14 H78 V66 H68" fill="none" stroke="#10110F" stroke-width="3.5" stroke-linecap="square"/>
+    <circle cx="38" cy="28" r="5.5" fill="#86D7E2" stroke="#10110F" stroke-width="1.5"/>
+    <circle cx="50" cy="40" r="5.5" fill="#86D7E2" stroke="#10110F" stroke-width="1.5"/>
+    <circle cx="38" cy="52" r="5.5" fill="#86D7E2" stroke="#10110F" stroke-width="1.5"/>
+    <path d="M38 33.5 L50 34.5 M50 45.5 L38 46.5" fill="none" stroke="#10110F" stroke-width="1.75"/>
+    <path d="M55.5 40 H66" fill="none" stroke="#10110F" stroke-width="1.75"/>
+    <rect x="66" y="34" width="12" height="12" fill="#B6E2BA" stroke="#10110F" stroke-width="1.5"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="110" y="42" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600" fill="#10110F">Agentic Evidence Pipeline</text>
+  <text x="110" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#8D9088">Evidence in. Reviewable decisions out.</text>
+</svg>

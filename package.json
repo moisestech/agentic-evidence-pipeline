@@ -1,0 +1,23 @@
+{
+  "name": "agentic-evidence-pipeline",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Production-style TypeScript pipeline for evidence collection, hybrid retrieval, typed agent decisions, human approval, and replayable audit trails.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "bootstrap": "echo \"bootstrap: planned — validates local deps and prepares fixture config\"",
+    "doctor": "echo \"doctor: planned — checks runtime, database, fake provider, worker, and API\"",
+    "demo": "echo \"demo: planned — seeded offline assessment with fake provider\"",
+    "verify": "echo \"verify: planned — format/lint/typecheck/unit/contract/integration\"",
+    "eval:offline": "echo \"eval:offline: planned — deterministic golden set with fake provider\"",
+    "eval:live": "echo \"eval:live: planned — explicit opt-in provider-backed eval\""
+  },
+  "packageManager": "bun@1.2.19",
+  "engines": {
+    "bun": ">=1.2.0"
+  },
+  "license": "MIT"
+}
