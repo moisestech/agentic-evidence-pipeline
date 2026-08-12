@@ -1,0 +1,373 @@
+{
+  "generatedAt": "2026-08-12T19:48:55.043Z",
+  "environment": "offline-fake-provider",
+  "disclaimer": "Harness metrics from the deterministic fake provider and in-memory hybrid retrieval. Not a live-model quality benchmark.",
+  "promptId": "assess-control",
+  "promptVersion": "1.0.0",
+  "promptChecksum": "52d5a76da8a3f6a23367d8df657af42d4b9d953397cea61ac05be12ed463c69b",
+  "provider": "fake-offline",
+  "caseCount": 30,
+  "retrieval": {
+    "lexical": {
+      "recallAt5": 1,
+      "mrr": 0.95
+    },
+    "vector": {
+      "recallAt5": 1,
+      "mrr": 0.9
+    },
+    "hybrid": {
+      "recallAt5": 1,
+      "mrr": 0.9
+    }
+  },
+  "citationValidityRate": 0.9,
+  "citationSupportRate": 0.9,
+  "schemaFirstPassValidity": 0.9,
+  "schemaFinalValidity": 1,
+  "abstentionCorrectness": 1,
+  "unsupportedClaimRate": 0.1,
+  "humanReviewRate": 0.9,
+  "retryFallbackRate": 0.1,
+  "latencyMs": {
+    "p50": 45,
+    "p95": 240
+  },
+  "tokens": {
+    "inputAvg": 213.2,
+    "outputAvg": 32
+  },
+  "estimatedCostUsdPerRun": 0,
+  "cases": [
+    {
+      "id": "clearly_met-01",
+      "category": "clearly_met",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": false,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "clearly_met-02",
+      "category": "clearly_met",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": false,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "clearly_met-03",
+      "category": "clearly_met",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": false,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "clearly_unmet-01",
+      "category": "clearly_unmet",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 0.5,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "clearly_unmet-02",
+      "category": "clearly_unmet",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 0.5,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "clearly_unmet-03",
+      "category": "clearly_unmet",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 0.5,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "conflicting-01",
+      "category": "conflicting",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "conflicting-02",
+      "category": "conflicting",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "conflicting-03",
+      "category": "conflicting",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "missing_evidence-01",
+      "category": "missing_evidence",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "missing_evidence-02",
+      "category": "missing_evidence",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "missing_evidence-03",
+      "category": "missing_evidence",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "stale_revision-01",
+      "category": "stale_revision",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "stale_revision-02",
+      "category": "stale_revision",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "stale_revision-03",
+      "category": "stale_revision",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "prompt_injection-01",
+      "category": "prompt_injection",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "prompt_injection-02",
+      "category": "prompt_injection",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "prompt_injection-03",
+      "category": "prompt_injection",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 45
+    },
+    {
+      "id": "cross_tenant-01",
+      "category": "cross_tenant",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": false,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 2,
+      "latencyMs": 45
+    },
+    {
+      "id": "cross_tenant-02",
+      "category": "cross_tenant",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": false,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 2,
+      "latencyMs": 45
+    },
+    {
+      "id": "cross_tenant-03",
+      "category": "cross_tenant",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": false,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 2,
+      "latencyMs": 45
+    },
+    {
+      "id": "malformed_output-01",
+      "category": "malformed_output",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 95
+    },
+    {
+      "id": "malformed_output-02",
+      "category": "malformed_output",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 95
+    },
+    {
+      "id": "malformed_output-03",
+      "category": "malformed_output",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 95
+    },
+    {
+      "id": "model_refusal-01",
+      "category": "model_refusal",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 0.5,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 70
+    },
+    {
+      "id": "model_refusal-02",
+      "category": "model_refusal",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 0.5,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 70
+    },
+    {
+      "id": "model_refusal-03",
+      "category": "model_refusal",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 0.5,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 70
+    },
+    {
+      "id": "timeout_rate_limit-01",
+      "category": "timeout_rate_limit",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 240
+    },
+    {
+      "id": "timeout_rate_limit-02",
+      "category": "timeout_rate_limit",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 240
+    },
+    {
+      "id": "timeout_rate_limit-03",
+      "category": "timeout_rate_limit",
+      "hybridRecallAt5": 1,
+      "hybridReciprocalRank": 1,
+      "citationValid": true,
+      "schemaValid": true,
+      "humanReview": true,
+      "unsupportedClaims": 0,
+      "latencyMs": 240
+    }
+  ]
+}

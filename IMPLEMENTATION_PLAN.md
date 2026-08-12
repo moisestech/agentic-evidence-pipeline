@@ -12,7 +12,7 @@ Mapped from Miami Applied AI / FDE repo specs. Implement one numbered task at a 
 | AEP-06 | done | Typed output, citation gate, fake invalid citation | malformed/citation failure tests |
 | AEP-07 | done | Review UI + audit events | `apps/web` run inspector + storyboard demos |
 | AEP-08 | done | Trigger.dev, idempotency, DLQ/replay | `@aep/jobs` DurableRunner duplicate + failure-injection tests |
-| AEP-09 | pending | Prompt registry + offline/live eval | versioned offline report |
+| AEP-09 | done | Prompt registry + offline/live eval | `bun run eval:offline` + committed harness report |
 | AEP-10 | pending | Traces, cost/latency, run inspector | aggregation tests |
 | AEP-11 | pending | Full bootstrap/doctor/demo + ops | fresh-clone record |
 | AEP-12 | pending | Demo recording + evidence ledger + `v0.1.0` | release tag |

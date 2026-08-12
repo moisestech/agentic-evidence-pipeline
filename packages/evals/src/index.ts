@@ -1,2 +1,18 @@
-/** Placeholder until AEP-09 eval runner lands. */
-export const PACKAGE_STATUS = "evals-planned" as const;
+export {
+  percentile,
+  recallAtK,
+  reciprocalRank,
+  retrieveOffline,
+} from "./retrieval-offline";
+export { loadGoldenSet, runOfflineEval } from "./runner";
+export { simulateAssessment } from "./simulate";
+export type {
+  EvalCorpusItem,
+  GoldenCase,
+  GoldenSet,
+  ModelBehavior,
+  ModeScores,
+  OfflineEvalReport,
+} from "./types";
+
+export const PACKAGE_STATUS = "evals-v0.0.1" as const;

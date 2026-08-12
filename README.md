@@ -50,6 +50,7 @@ Not a chatbot. No autonomous third-party writes. Public reference implementation
 | LangGraph + human interrupt/resume | **done** (persisted state machine) | `@aep/agent` resume/idempotency tests |
 | Citation gate in the run path + review UI | **done** | citation_gate_blocked audit + `apps/web` run inspector |
 | Durable jobs (idempotency, retry, DLQ/replay) | **done** | `@aep/jobs` DurableRunner + Trigger.dev adapter docs |
+| Prompt registry + offline eval harness | **done** | `bun run eval:offline` → `reports/offline/*-fake-provider.json` |
 | Trigger.dev cloud deploy + offline demo CLI | partial / planned | optional peer `@trigger.dev/sdk`; CLI demo AEP-11 |
 | README review-flow demo | **storyboard** | [`demo-review-flow.webp`](docs/assets/demo-review-flow.webp) — live capture later |
 
@@ -138,8 +139,9 @@ Without Docker, `bun run verify` still runs format/lint/typecheck/unit tests; DB
 | `bun run verify` | Format, lint, typecheck, tests (CI gate) |
 | `bun run demo:retrieve` | Seed fixtures and print lexical/vector/hybrid hits (needs Docker DB) |
 | `bun run web:dev` | Run inspector UI on :3010 (needs Docker DB + migrate) |
+| `bun run eval:offline` | Deterministic golden-set harness report (no provider credential) |
+| `bun run eval:live` | Opt-in live eval — requires `AEP_LIVE_EVAL=1` + provider key |
 | `bun run demo` | Full offline CLI review flow — **AEP-11** |
-| `bun run eval:offline` | Golden-set harness — **AEP-09** |
 
 ## Run lifecycle
 
@@ -173,6 +175,8 @@ stateDiagram-v2
 | Hybrid retrieval | `packages/retrieval` | RRF unit tests + CI integration | `demo:retrieve` |
 | Run inspector UI | `apps/web` | approve/edit/reject API + screen | `bun run web:dev` |
 | Durable jobs + DLQ/replay | `packages/jobs` | duplicate + failure-injection unit tests | ADR 0006 |
+| Prompt registry | `packages/prompts` | version + checksum registry tests | `assess-control@1.0.0` |
+| Offline eval harness | `packages/evals` | 30-case golden set + metrics tests | [`reports/offline/2026-08-12-fake-provider.json`](reports/offline/2026-08-12-fake-provider.json) |
 
 Full claim index: [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md).
 
@@ -188,7 +192,7 @@ README packaging checklist (what exists vs what to capture next):
 | Demo review loop | `docs/assets/demo-review-flow.webp` | **storyboard done** (live capture later) |
 | Invalid-citation clip | `docs/assets/demo-invalid-citation.webp` | **storyboard done** |
 | Run inspector shot | `docs/assets/run-inspector.png` | after AEP-10 |
-| Eval report shot | `docs/assets/eval-offline-report.png` | after AEP-09 |
+| Eval report shot | `docs/assets/eval-offline-report.png` | JSON report committed; PNG optional |
 
 Details, capture rules, and production order: **[`docs/ASSETS.md`](docs/ASSETS.md)**.
 
@@ -204,7 +208,7 @@ ADRs: [`docs/adr/`](docs/adr/).
 
 ## Status and limitations
 
-**Status:** building toward `v0.1.0` (AEP-01–AEP-08 landed).
+**Status:** building toward `v0.1.0` (AEP-01–AEP-09 landed).
 
 This is a public reference implementation—not customer production, SOC 2, or a security certification. No email/SMS, no autonomous final decisions, no private data in fixtures.
 

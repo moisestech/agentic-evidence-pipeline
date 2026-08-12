@@ -15,6 +15,7 @@
   "dependencies": {
     "@aep/contracts": "workspace:*",
     "@aep/db": "workspace:*",
+    "@aep/prompts": "workspace:*",
     "@aep/retrieval": "workspace:*"
   },
   "devDependencies": {

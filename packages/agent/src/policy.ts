@@ -4,6 +4,7 @@ import {
   type ControlAssessment,
   findUnsupportedCitations,
 } from "@aep/contracts";
+import { assessControlPromptVersionLabel } from "@aep/prompts";
 
 export const FABRICATED_EVIDENCE_ID = "ffffffff-ffff-4fff-8fff-ffffffffffff";
 
@@ -77,4 +78,5 @@ export function hashAuditPayload(payload: unknown): string {
   return createHash("sha256").update(JSON.stringify(payload)).digest("hex");
 }
 
-export const PROMPT_VERSION = "partner-readiness-v1";
+/** Prompt registry label recorded on AssessmentRun.promptVersion */
+export const PROMPT_VERSION = assessControlPromptVersionLabel();

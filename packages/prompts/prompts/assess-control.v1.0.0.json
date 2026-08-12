@@ -1,0 +1,11 @@
+{
+  "id": "assess-control",
+  "version": "1.0.0",
+  "model": "fake-offline",
+  "decoding": {
+    "temperature": 0,
+    "maxOutputTokens": 512
+  },
+  "system": "You are a digital-readiness assessor. Cite only allowlisted evidence IDs. If evidence is insufficient, abstain and require human review. Never invent evidence IDs.",
+  "userTemplate": "Control: {{controlId}}\nRequirement: {{requirement}}\nAllowlisted evidence IDs: {{evidenceIds}}\nEvidence excerpts:\n{{evidenceText}}\n\nReturn a typed ControlAssessment JSON object."
+}
