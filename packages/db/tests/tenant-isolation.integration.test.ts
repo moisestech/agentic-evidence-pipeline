@@ -4,7 +4,8 @@ import { listEvidenceForTenant } from "../src/tenant";
 import { ensurePgvectorExtension } from "../src/vector";
 
 const databaseUrl = process.env.DATABASE_URL;
-const describeDb = databaseUrl ? describe : describe.skip;
+const runIntegration = Boolean(databaseUrl) && process.env.AEP_INTEGRATION === "1";
+const describeDb = runIntegration ? describe : describe.skip;
 
 describeDb("tenant isolation (integration)", () => {
   let db: AepPrismaClient;

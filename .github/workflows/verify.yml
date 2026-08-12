@@ -29,6 +29,7 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgresql://aep:aep@localhost:5433/aep?schema=public
+      AEP_INTEGRATION: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -109,7 +109,9 @@
       "name": "@aep/retrieval",
       "version": "0.0.1",
       "dependencies": {
+        "@aep/connectors": "workspace:*",
         "@aep/contracts": "workspace:*",
+        "@aep/db": "workspace:*",
       },
       "devDependencies": {
         "@aep/typescript-config": "workspace:*",

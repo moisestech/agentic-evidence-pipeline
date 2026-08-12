@@ -11,6 +11,7 @@
     "bootstrap": "bun scripts/bootstrap.ts",
     "doctor": "bun scripts/doctor.ts",
     "demo": "bun scripts/demo.ts",
+    "demo:retrieve": "bun scripts/demo-retrieve.ts",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "turbo run lint",

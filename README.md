@@ -44,7 +44,7 @@ Not a chatbot. No autonomous third-party writes. Public reference implementation
 | Monorepo + `bun run verify` + CI | **done** | GitHub Actions `verify` |
 | Prisma schema, pgvector column, tenant helpers | **done** | `@aep/db` + migrations |
 | Fixture connectors + normalize/hash | **done** | `@aep/contracts` / `@aep/connectors` tests |
-| Hybrid retrieval (FTS + vector fusion) | planned | AEP-04 |
+| Hybrid retrieval (FTS + vector fusion) | **done** | `@aep/retrieval` + `bun run demo:retrieve` |
 | LangGraph + human interrupt/resume | planned | AEP-05 |
 | Citation gate in the run path + review UI | partial → planned | helper exists; full gate/UI AEP-06/07 |
 | Trigger.dev durability + offline demo CLI | planned | AEP-08 / AEP-11 |
@@ -131,7 +131,8 @@ Without Docker, `bun run verify` still runs format/lint/typecheck/unit tests; DB
 | Command | Meaning |
 | --- | --- |
 | `bun run verify` | Format, lint, typecheck, tests (CI gate) |
-| `bun run demo` | Offline review flow — **not implemented yet** |
+| `bun run demo:retrieve` | Seed fixtures and print lexical/vector/hybrid hits (needs Docker DB) |
+| `bun run demo` | Full offline review flow — **not implemented yet** |
 | `bun run eval:offline` | Golden-set harness — **AEP-09** |
 
 ## Run lifecycle
@@ -163,7 +164,7 @@ stateDiagram-v2
 | Fixture connectors + hash | `packages/connectors` | connector contract tests | `fixtures/` |
 | Citation allowlist helper | `packages/contracts` | citation-gate unit tests | failure demo (later) |
 | Persisted agent + HITL | `packages/agent` | restart/resume test | run timeline (later) |
-| Hybrid retrieval | `packages/retrieval` | golden-set comparison | offline report (later) |
+| Hybrid retrieval | `packages/retrieval` | RRF unit tests + CI integration | `demo:retrieve` |
 
 Full claim index: [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md).
 
@@ -195,7 +196,7 @@ ADRs: [`docs/adr/`](docs/adr/).
 
 ## Status and limitations
 
-**Status:** building toward `v0.1.0` (AEP-01–AEP-03 landed).
+**Status:** building toward `v0.1.0` (AEP-01–AEP-04 landed).
 
 This is a public reference implementation—not customer production, SOC 2, or a security certification. No email/SMS, no autonomous final decisions, no private data in fixtures.
 

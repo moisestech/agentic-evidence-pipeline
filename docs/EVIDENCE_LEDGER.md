@@ -5,7 +5,7 @@ Every public claim must link to code, test, report, screenshot, or demo. Until t
 | Claim | Status | Evidence |
 | --- | --- | --- |
 | Stateful agent with human interrupt/resume | planned | `packages/agent` + restart/resume test |
-| Hybrid FTS + pgvector retrieval | partial | Prisma `EvidenceItem.embedding` + `vector.ts` boundary; fusion/eval still planned |
+| Hybrid FTS + pgvector retrieval | verified | `@aep/retrieval` RRF + offline embedder; CI integration with `AEP_INTEGRATION=1` |
 | Tenant isolation at query boundary | partial | `listEvidenceForTenant` + unit/integration tests |
 | Fixture connectors + normalize/hash | verified | `@aep/connectors` + `fixtures/` + contract tests |
 | Citation allowlist fails closed | partial | `@aep/contracts` helper + unit tests; full gate + fixture demo still planned |
