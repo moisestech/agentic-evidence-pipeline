@@ -10,6 +10,7 @@ Shared palette: paper `#F0EEE5`, ink `#10110F`, quiet gray `#8D9088`, evidence c
 | --- | --- | --- |
 | Mark (citation brackets → approval) | [`docs/assets/aep-mark.svg`](./assets/aep-mark.svg) | done |
 | Lockup (mark + wordmark) | [`docs/assets/aep-lockup.svg`](./assets/aep-lockup.svg) | done |
+| Social preview SVG + PNG | [`docs/assets/social-preview.svg`](./assets/social-preview.svg), [`social-preview.png`](./assets/social-preview.png) | done |
 | Overview architecture Mermaid | README `#architecture` | done (code diagram) |
 | Invalid-citation sequence Mermaid | README `#what-happens-when-the-model-is-wrong` | done (code diagram) |
 | Run lifecycle state Mermaid | README `#run-lifecycle` | done (code diagram) |
@@ -18,7 +19,7 @@ Shared palette: paper `#F0EEE5`, ink `#10110F`, quiet gray `#8D9088`, evidence c
 
 | # | Asset | Spec | When to create | Blocks |
 | ---: | --- | --- | --- | --- |
-| 1 | **Social preview** `docs/assets/social-preview.png` | 1280×640 PNG; paper background; lockup left; short promise + tiny architecture fragment; no fake metrics | Now (static design) | GitHub unfurl / LinkedIn |
+| 1 | **Social preview** `docs/assets/social-preview.png` | 1280×640 PNG exported from SVG | **done** | GitHub unfurl / LinkedIn |
 | 2 | **Container architecture SVG** `docs/assets/architecture-containers.svg` | Export of Mermaid: web → API → agent → retrieval → Postgres / Trigger | After AEP-05/07 names stabilize | README depth + ARCHITECTURE.md |
 | 3 | **Evidence lineage SVG** `docs/assets/evidence-lineage.svg` | source revision → evidence → retrieval → citation → review → audit event | After AEP-06/07 | Interview walkthrough |
 | 4 | **Demo loop recording** `docs/assets/demo-review-flow.webp` | 18–25s real app capture: collect → retrieve → needs_review → approve → timeline | After AEP-07 + offline demo | README hero visual |

@@ -9,7 +9,15 @@
 
 A stateful TypeScript reference implementation that turns public or synthetic source material into typed, cited assessments—then pauses for human approval and preserves the complete decision trail.
 
-[Run it locally](#run-it-locally) · [Architecture](#architecture) · [Evidence map](#evidence-map) · [Visual assets](#visual-assets-needed) · [Limitations](#status-and-limitations)
+[30-second](#the-30-second-version) ·
+[Status](#what-works-today-vs-planned) ·
+[Architecture](#architecture) ·
+[When the model is wrong](#what-happens-when-the-model-is-wrong) ·
+[Run locally](#run-it-locally) ·
+[Lifecycle](#run-lifecycle) ·
+[Evidence map](#evidence-map) ·
+[Assets](#visual-assets-needed) ·
+[Limits](#status-and-limitations)
 
 ![Status](https://img.shields.io/badge/status-building_v0.1-8D9088)
 ![CI](https://github.com/moisestech/agentic-evidence-pipeline/actions/workflows/verify.yml/badge.svg)
@@ -90,13 +98,13 @@ Memorable failure: fluent assessment + **nonexistent evidence ID**.
 
 ```mermaid
 sequenceDiagram
-    participant M as Model adapter
-    participant V as Citation gate
-    participant R as Review queue
-    participant L as Audit ledger
-    M->>V: Typed assessment + invalid evidence ID
+    participant M as ModelAdapter
+    participant V as CitationGate
+    participant R as ReviewQueue
+    participant L as AuditLedger
+    M->>V: Typed assessment with invalid evidence ID
     V->>V: Validate schema and citation allowlist
-    V-->>R: Block finalization; attach unsupported claim
+    V-->>R: Block finalization and attach unsupported claim
     R->>L: Record reviewable failure event
 ```
 
@@ -166,7 +174,7 @@ README packaging checklist (what exists vs what to capture next):
 | Need | File | Status |
 | --- | --- | --- |
 | Mark / lockup | `docs/assets/aep-mark.svg`, `aep-lockup.svg` | **done** |
-| Social preview design | `docs/assets/social-preview.svg` (export PNG 1280×640 for GitHub) | **SVG draft** |
+| Social preview | `docs/assets/social-preview.png` | **done** |
 | Architecture Mermaid | in README / ARCHITECTURE | **done** |
 | Demo review loop | `docs/assets/demo-review-flow.webp` | after offline demo |
 | Invalid-citation clip | `docs/assets/demo-invalid-citation.webp` | after citation gate + UI |

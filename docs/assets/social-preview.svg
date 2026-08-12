@@ -14,7 +14,7 @@
   </g>
   <text x="320" y="250" font-family="ui-sans-serif, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" fill="#10110F">Agentic Evidence Pipeline</text>
   <text x="320" y="310" font-family="ui-sans-serif, Helvetica, Arial, sans-serif" font-size="28" fill="#8D9088">Evidence in. Reviewable decisions out.</text>
-  <text x="320" y="380" font-family="ui-monospace, Menlo, monospace" font-size="18" fill="#10110F">sources ’ retrieve ’ cite ’ human review ’ audit</text>
+  <text x="320" y="380" font-family="ui-monospace, Menlo, monospace" font-size="18" fill="#10110F">sources &#8594; retrieve &#8594; cite &#8594; review &#8594; audit</text>
   <rect x="320" y="420" width="18" height="18" fill="#86D7E2"/>
   <text x="350" y="435" font-family="ui-sans-serif, Helvetica, Arial, sans-serif" font-size="16" fill="#8D9088">grounded</text>
   <rect x="470" y="420" width="18" height="18" fill="#E58B72"/>
