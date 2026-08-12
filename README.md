@@ -45,8 +45,8 @@ Not a chatbot. No autonomous third-party writes. Public reference implementation
 | Prisma schema, pgvector column, tenant helpers | **done** | `@aep/db` + migrations |
 | Fixture connectors + normalize/hash | **done** | `@aep/contracts` / `@aep/connectors` tests |
 | Hybrid retrieval (FTS + vector fusion) | **done** | `@aep/retrieval` + `bun run demo:retrieve` |
-| LangGraph + human interrupt/resume | planned | AEP-05 |
-| Citation gate in the run path + review UI | partial → planned | helper exists; full gate/UI AEP-06/07 |
+| LangGraph + human interrupt/resume | **done** (persisted state machine) | `@aep/agent` resume/idempotency tests |
+| Citation gate in the run path + review UI | **gate done** / UI next | citation_gate_blocked audit + AEP-07 |
 | Trigger.dev durability + offline demo CLI | planned | AEP-08 / AEP-11 |
 | Recorded README demo loop | planned | after behavior exists — [ASSETS.md](docs/ASSETS.md) |
 

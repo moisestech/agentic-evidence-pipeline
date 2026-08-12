@@ -8,8 +8,8 @@ Mapped from Miami Applied AI / FDE repo specs. Implement one numbered task at a 
 | AEP-02 | done | Postgres/pgvector, Prisma, tenant tests | migration + isolation tests |
 | AEP-03 | done | Fixture connectors + normalize/hash | connector contract tests |
 | AEP-04 | done | Lexical/vector retrieval + fusion | retrieval unit + CI integration |
-| AEP-05 | pending | LangGraph + interrupt/resume | restart/resume integration test |
-| AEP-06 | pending | Typed output, repair, citation gate | malformed/citation failure tests |
+| AEP-05 | done | Persisted state graph + interrupt/resume | restart/resume integration test |
+| AEP-06 | done | Typed output, citation gate, fake invalid citation | malformed/citation failure tests |
 | AEP-07 | pending | Review UI + audit events | approve/edit/reject E2E |
 | AEP-08 | pending | Trigger.dev, idempotency, DLQ/replay | duplicate + failure-injection tests |
 | AEP-09 | pending | Prompt registry + offline/live eval | versioned offline report |

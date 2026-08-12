@@ -4,12 +4,9 @@ Every public claim must link to code, test, report, screenshot, or demo. Until t
 
 | Claim | Status | Evidence |
 | --- | --- | --- |
-| Stateful agent with human interrupt/resume | planned | `packages/agent` + restart/resume test |
-| Hybrid FTS + pgvector retrieval | verified | `@aep/retrieval` RRF + offline embedder; CI integration with `AEP_INTEGRATION=1` |
-| Tenant isolation at query boundary | partial | `listEvidenceForTenant` + unit/integration tests |
-| Fixture connectors + normalize/hash | verified | `@aep/connectors` + `fixtures/` + contract tests |
-| Citation allowlist fails closed | partial | `@aep/contracts` helper + unit tests; full gate + fixture demo still planned |
-| Append-only audit trail | planned | approve/edit/reject E2E + event hash tests |
+| Stateful agent with human interrupt/resume | verified | `@aep/agent` runAssessment/resumeRun + CI integration |
+| Citation allowlist fails closed | verified | fake model fabricated ID + applyCitationGate + audit event |
+| Append-only audit trail | partial | AuditEvent writes on retrieval/gate/review; hash chain on create |
 | Idempotent durable jobs | planned | duplicate-trigger + replay tests |
 | Offline demo without provider credentials | planned | `bun run demo` (AEP-03–AEP-07) |
 | Workspace verify without credentials | verified | `bun run verify` + GitHub Actions `verify` workflow |
