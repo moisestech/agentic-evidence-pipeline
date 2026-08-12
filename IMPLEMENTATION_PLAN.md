@@ -6,7 +6,7 @@ Mapped from Miami Applied AI / FDE repo specs. Implement one numbered task at a 
 | --- | --- | --- | --- |
 | AEP-01 | done | Bun/Turborepo workspace + CI | `bun install --frozen-lockfile && bun run verify` |
 | AEP-02 | done | Postgres/pgvector, Prisma, tenant tests | migration + isolation tests |
-| AEP-03 | pending | Fixture connectors + normalize/hash | connector contract tests |
+| AEP-03 | done | Fixture connectors + normalize/hash | connector contract tests |
 | AEP-04 | pending | Lexical/vector retrieval + fusion | retrieval baseline report |
 | AEP-05 | pending | LangGraph + interrupt/resume | restart/resume integration test |
 | AEP-06 | pending | Typed output, repair, citation gate | malformed/citation failure tests |
@@ -17,9 +17,11 @@ Mapped from Miami Applied AI / FDE repo specs. Implement one numbered task at a 
 | AEP-11 | pending | Full bootstrap/doctor/demo + ops | fresh-clone record |
 | AEP-12 | pending | Demo recording + evidence ledger + `v0.1.0` | release tag |
 
-## AEP-01 notes
+## AEP-01–AEP-03 notes
 
-- Shared contracts live in `@aep/contracts` (Zod + citation allowlist helper).
-- Remaining packages are typed placeholders so turbo has a real graph.
+- Shared contracts live in `@aep/contracts` (Zod + citation allowlist + content hash helpers).
+- `@aep/connectors` normalizes GitHub / HTTP Markdown / CSV fixtures into versioned sources + evidence.
+- `@aep/db` owns Prisma + isolated pgvector SQL; remaining packages are typed placeholders.
 - `demo` / `eval:*` exit nonzero until later tasks implement them.
-- Offline CI requires no provider credentials.
+- Offline CI requires no provider credentials; Postgres is provided as a CI service for migrations/integration tests.
+- Visual packaging checklist: `docs/ASSETS.md`.

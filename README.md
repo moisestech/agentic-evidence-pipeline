@@ -1,4 +1,4 @@
-<!-- Shell README: demo recordings and generated metrics are deferred until behavior exists. -->
+<!-- README: case-study shell. Demo WebPs land only after real recordings exist — see docs/ASSETS.md. -->
 
 <div align="center">
   <img src="docs/assets/aep-mark.svg" alt="Agentic Evidence Pipeline mark: cited evidence nodes resolving into an approved decision" width="88" />
@@ -9,7 +9,7 @@
 
 A stateful TypeScript reference implementation that turns public or synthetic source material into typed, cited assessments—then pauses for human approval and preserves the complete decision trail.
 
-[Run it locally](#run-it-locally) · [See the architecture](#architecture) · [Inspect the evidence](#evidence-map) · [Read the limitations](#status-and-limitations)
+[Run it locally](#run-it-locally) · [Architecture](#architecture) · [Evidence map](#evidence-map) · [Visual assets](#visual-assets-needed) · [Limitations](#status-and-limitations)
 
 ![Status](https://img.shields.io/badge/status-building_v0.1-8D9088)
 ![CI](https://github.com/moisestech/agentic-evidence-pipeline/actions/workflows/verify.yml/badge.svg)
@@ -21,41 +21,52 @@ A stateful TypeScript reference implementation that turns public or synthetic so
 
 | | |
 | --- | --- |
-| **Input** | Versioned public or synthetic evidence from GitHub, HTTP/Markdown, and CSV sources |
-| **Work** | Hybrid retrieval + a typed LangGraph assessment with explicit state |
-| **Guarantee** | Unsupported citations fail closed; uncertain or adverse results pause for a person |
-| **Output** | An approved, edited, or rejected assessment with an append-only event trail |
-| **Inspectability** | Every run exposes source revisions, prompt version, citations, retries, latency, cost, and failure class |
+| **Input** | Versioned public/synthetic evidence (GitHub, HTTP/Markdown, CSV fixtures) |
+| **Work** | Hybrid retrieval + typed LangGraph assessment with explicit state |
+| **Guarantee** | Unsupported citations fail closed; uncertain results pause for a person |
+| **Output** | Approved, edited, or rejected assessment + append-only event trail |
+| **Inspectability** | Source revisions, prompt version, citations, retries, latency, cost, failure class |
 
-This is not a chatbot and it does not autonomously modify external systems. It is a public reference implementation extracted from patterns encountered building generative-AI and institutional workflow systems. All included data is public or synthetic.
+Not a chatbot. No autonomous third-party writes. Public reference implementation with **public/synthetic fixtures only**.
+
+## What works today vs planned
+
+| Area | Status | Proof |
+| --- | --- | --- |
+| Monorepo + `bun run verify` + CI | **done** | GitHub Actions `verify` |
+| Prisma schema, pgvector column, tenant helpers | **done** | `@aep/db` + migrations |
+| Fixture connectors + normalize/hash | **done** | `@aep/contracts` / `@aep/connectors` tests |
+| Hybrid retrieval (FTS + vector fusion) | planned | AEP-04 |
+| LangGraph + human interrupt/resume | planned | AEP-05 |
+| Citation gate in the run path + review UI | partial → planned | helper exists; full gate/UI AEP-06/07 |
+| Trigger.dev durability + offline demo CLI | planned | AEP-08 / AEP-11 |
+| Recorded README demo loop | planned | after behavior exists — [ASSETS.md](docs/ASSETS.md) |
 
 ## Why this exists
 
-Most agent demos optimize for the moment a model produces a plausible answer. The difficult part begins after that moment:
+Most agent demos stop when the model sounds plausible. The hard questions come after:
 
 - Which source revision supported each sentence?
-- What happened when the provider returned malformed output or invented a citation?
+- What happens when the model invents a citation?
 - Can a person stop, edit, or reject the decision?
-- Does a worker restart preserve pending review state?
-- Can an operator explain the run without attaching a debugger?
+- Does a worker restart preserve pending review?
+- Can an operator explain the run without a debugger?
 
-Agentic Evidence Pipeline treats those questions as the product.
+This repo treats those as the product.
 
-## The demo scenario
+## Demo scenario
 
-A program manager evaluates a partner organization against a published digital-readiness rubric. The system:
+A program manager evaluates a partner organization against a published digital-readiness rubric:
 
-1. collects public or synthetic evidence;
-2. normalizes, versions, and hashes it;
-3. retrieves the relevant rubric controls and evidence with lexical + vector search;
-4. produces a bounded, typed assessment;
-5. verifies every evidence reference;
-6. pauses when human judgment is required; and
-7. records the final decision in an append-only audit ledger.
+1. collect public/synthetic evidence;
+2. normalize, version, and hash it;
+3. retrieve rubric controls + evidence (lexical + vector);
+4. produce a bounded, typed assessment;
+5. verify every evidence reference;
+6. pause when human judgment is required;
+7. record the decision in an append-only audit ledger.
 
-No private institutional, applicant, customer, or contact data is included.
-
-> **Demo recordings:** the 30-second visual loop will be added only after the offline fixture demo and tests exist. Until then, use the architecture and failure walkthrough below.
+No private institutional, applicant, customer, or contact data.
 
 ## Architecture
 
@@ -69,13 +80,13 @@ flowchart TD
     F --> G["Append-only audit trail"]
 ```
 
-The model is used only where interpretation is necessary. Source collection, hashing, retrieval filters, schema validation, citation checks, state transitions, approval, and audit persistence remain deterministic.
+Collection, hashing, retrieval filters, schema validation, citation checks, state transitions, approval, and audit persistence stay **deterministic**. The model is used only where interpretation is required.
 
-For container boundaries, the complete state machine, evidence lineage, and failure/replay sequences, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+Deeper diagrams: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ## What happens when the model is wrong?
 
-The memorable failure fixture returns a fluent assessment with an evidence ID that does not exist.
+Memorable failure: fluent assessment + **nonexistent evidence ID**.
 
 ```mermaid
 sequenceDiagram
@@ -89,39 +100,31 @@ sequenceDiagram
     R->>L: Record reviewable failure event
 ```
 
-The system does not “repair” an unsupported claim by inventing better prose. It returns `insufficient_evidence`, or routes the result to review according to policy.
+The system does not “repair” unsupported claims with invented prose. It returns `insufficient_evidence` or routes to review.
 
 ## Run it locally
 
-### Requirements
-
-- Bun — version will be pinned in the lockfile when the workspace is wired
-- Docker with Compose
-- No model-provider credential for the offline demo
+**Requirements:** Bun 1.2+, Docker (for Postgres). No model-provider credential for offline unit tests.
 
 ```bash
 git clone https://github.com/moisestech/agentic-evidence-pipeline.git
 cd agentic-evidence-pipeline
 bun install --frozen-lockfile
 cp .env.example .env
-bun run db:up          # requires Docker Desktop
+bun run db:up          # Docker Desktop must be running
 bun run db:migrate
 bun run bootstrap
 bun run doctor
 bun run verify
 ```
 
-> **Status (AEP-02):** workspace install, Prisma schema/migrations, `bootstrap`, `doctor`, and `verify` work. Without `DATABASE_URL`, unit tests still pass and DB integration tests skip. `demo` and `eval:*` still exit until later tasks.
+Without Docker, `bun run verify` still runs format/lint/typecheck/unit tests; DB integration tests skip until `DATABASE_URL` is set.
 
-The default demo will use the deterministic fake provider. A live-provider evaluation is a separate, explicit command and is never required for tests or CI.
-
-### Verification
-
-```bash
-bun run verify
-```
-
-`verify` runs format check, lint, typecheck, and tests across the Turborepo workspace (no provider credentials). `bun run eval:offline` lands with AEP-09.
+| Command | Meaning |
+| --- | --- |
+| `bun run verify` | Format, lint, typecheck, tests (CI gate) |
+| `bun run demo` | Offline review flow — **not implemented yet** |
+| `bun run eval:offline` | Golden-set harness — **AEP-09** |
 
 ## Run lifecycle
 
@@ -143,93 +146,58 @@ stateDiagram-v2
     finalized --> [*]
 ```
 
-Pending reviews are persisted. Restarting the API or worker must not erase the interrupt or create a second run when the same idempotency key is submitted.
-
-## Grounding and retrieval
-
-The retrieval layer keeps three comparable modes:
-
-- PostgreSQL full-text search baseline;
-- pgvector semantic retrieval; and
-- deterministic rank fusion across both lists.
-
-Tenant and visibility filters run before prompt construction. The citation gate accepts only evidence IDs retrieved and allowlisted for the current run; nonexistent, hidden, stale, and cross-tenant citations fail closed.
-
-## Human review is a state transition, not a modal
-
-The reviewer can:
-
-- approve the assessment as written;
-- edit it while preserving before/after hashes; or
-- reject it with a reason.
-
-Every action appends an event with actor type, run ID, trace ID, timestamp, and hash-chain metadata. The UI is an operational run inspector—there are no chat bubbles.
-
-## Evaluation
-
-The committed golden set will cover:
-
-- supported, unsupported, conflicting, and missing evidence;
-- malformed output and model refusal;
-- prompt injection inside a source document;
-- cross-tenant citation attempts;
-- stale source revisions;
-- timeouts and rate limits.
-
-The runner measures retrieval, citation, schema, abstention, human-review, latency, cost, and retry behavior. Offline reports prove the harness; they are not presented as live-model quality benchmarks.
-
-Metrics appear here only after a committed command produces them.
-
 ## Evidence map
 
 | Capability | Implementation | Verification | Artifact |
 | --- | --- | --- | --- |
-| Persisted agent state | `packages/agent` | restart/resume integration test | run timeline screenshot |
-| Hybrid retrieval | `packages/retrieval` | lexical/vector/hybrid golden-set comparison | dated offline report |
-| Typed output | `packages/contracts` | malformed output + bounded repair tests | validation event fixture |
-| Citation grounding | citation gate | invalid/cross-tenant/hidden citation tests | failure demo |
-| Human approval | web review flow + API command | approve/edit/reject E2E tests | before/after audit events |
-| Durable execution | `trigger/` jobs | duplicate, timeout, retry, and replay tests | trace walkthrough |
-| Cost and latency | `packages/telemetry` | aggregation tests | run inspector screenshot |
+| Workspace quality gate | root + turbo | `bun run verify` / CI | Actions badge |
+| Tenant-scoped DB | `packages/db` | tenant unit + integration tests | migrations |
+| Fixture connectors + hash | `packages/connectors` | connector contract tests | `fixtures/` |
+| Citation allowlist helper | `packages/contracts` | citation-gate unit tests | failure demo (later) |
+| Persisted agent + HITL | `packages/agent` | restart/resume test | run timeline (later) |
+| Hybrid retrieval | `packages/retrieval` | golden-set comparison | offline report (later) |
 
-The complete claim-to-evidence index lives in [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md). Rows above are **target** proof links until the corresponding code and tests exist.
+Full claim index: [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md).
 
-## Operational behavior
+## Visual assets needed
 
-| Failure | Classification | Behavior |
+README packaging checklist (what exists vs what to capture next):
+
+| Need | File | Status |
 | --- | --- | --- |
-| Provider timeout / 429 | Transient | Capped retry with jitter; preserve run and trace IDs |
-| Invalid provider schema | Non-retryable after bounded repair | Create a reviewable error record |
-| Unsupported citation | Policy failure | Block finalization and surface the unsupported claim |
-| Duplicate trigger | Idempotent duplicate | Reuse the existing run; do not create a second review |
-| Worker interruption | Recoverable | Resume from persisted state |
-| Cross-tenant evidence | Authorization failure | Fail closed before prompt construction |
+| Mark / lockup | `docs/assets/aep-mark.svg`, `aep-lockup.svg` | **done** |
+| Social preview design | `docs/assets/social-preview.svg` (export PNG 1280×640 for GitHub) | **SVG draft** |
+| Architecture Mermaid | in README / ARCHITECTURE | **done** |
+| Demo review loop | `docs/assets/demo-review-flow.webp` | after offline demo |
+| Invalid-citation clip | `docs/assets/demo-invalid-citation.webp` | after citation gate + UI |
+| Run inspector shot | `docs/assets/run-inspector.png` | after AEP-10 |
+| Eval report shot | `docs/assets/eval-offline-report.png` | after AEP-09 |
 
-See [`docs/FAILURE_MODES.md`](docs/FAILURE_MODES.md), [`docs/SECURITY.md`](docs/SECURITY.md), and [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
+Details, capture rules, and production order: **[`docs/ASSETS.md`](docs/ASSETS.md)**.
 
 ## Design decisions
 
-- **One explicit graph, not multi-agent theater.** The state machine is easier to test, resume, and explain.
-- **Postgres for both lexical and vector retrieval.** Fewer operational surfaces make local verification credible.
-- **A deterministic provider is first-class.** CI and the complete offline demo require no paid API or secret.
-- **Human review is persisted.** Approval cannot depend on one browser session staying alive.
-- **Every public claim needs evidence.** Architecture intentions are labeled as intentions until code and tests exist.
+- One explicit graph, not multi-agent theater.
+- Postgres for lexical + vector retrieval (fewer ops surfaces).
+- Deterministic fake provider is first-class for CI.
+- Human review is persisted state, not a browser modal.
+- Every public claim needs linked evidence.
 
-Architecture decisions are recorded in [`docs/adr/`](docs/adr/).
+ADRs: [`docs/adr/`](docs/adr/).
 
 ## Status and limitations
 
-**Current status:** building toward `v0.1.0`.
+**Status:** building toward `v0.1.0` (AEP-01–AEP-03 landed).
 
-This repository is a public reference implementation, not a claim of customer production deployment, SOC 2 compliance, or security certification. It will use public/synthetic fixtures, one real provider adapter when configured, and one deterministic fake provider. It does not send email/SMS, mutate third-party systems, or make autonomous final decisions.
+This is a public reference implementation—not customer production, SOC 2, or a security certification. No email/SMS, no autonomous final decisions, no private data in fixtures.
 
-Known limitations and prohibited claims are tracked in [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md).
+See [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md) for prohibited claims.
 
 ## Origin
 
-I built this to extract the reusable engineering patterns behind work on production generative storytelling, institutional memory and retrieval, governed approval workflows, and model cost/latency instrumentation—without publishing any client or institutional data.
+Extracted from patterns behind production generative storytelling, institutional memory/retrieval, governed approval workflows, and model cost/latency instrumentation—without publishing client or institutional data.
 
-I am [Moises Sanabria](https://moises.tech), a full-stack AI systems builder and artist in Miami. I am interested in systems that remain legible when models, data, institutions, and people disagree.
+[Moises Sanabria](https://moises.tech) — full-stack AI systems builder and artist in Miami.
 
 ## License
 

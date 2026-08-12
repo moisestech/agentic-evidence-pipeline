@@ -7,6 +7,7 @@ Every public claim must link to code, test, report, screenshot, or demo. Until t
 | Stateful agent with human interrupt/resume | planned | `packages/agent` + restart/resume test |
 | Hybrid FTS + pgvector retrieval | partial | Prisma `EvidenceItem.embedding` + `vector.ts` boundary; fusion/eval still planned |
 | Tenant isolation at query boundary | partial | `listEvidenceForTenant` + unit/integration tests |
+| Fixture connectors + normalize/hash | verified | `@aep/connectors` + `fixtures/` + contract tests |
 | Citation allowlist fails closed | partial | `@aep/contracts` helper + unit tests; full gate + fixture demo still planned |
 | Append-only audit trail | planned | approve/edit/reject E2E + event hash tests |
 | Idempotent durable jobs | planned | duplicate-trigger + replay tests |

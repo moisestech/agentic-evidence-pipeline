@@ -9,8 +9,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "bun test --pass-with-no-tests",
-    "lint": "biome check src"
+    "test": "bun test tests",
+    "lint": "biome check src tests"
   },
   "dependencies": {
     "@aep/contracts": "workspace:*"
