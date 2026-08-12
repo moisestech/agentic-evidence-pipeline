@@ -21,6 +21,7 @@ model Tenant {
   assessmentRuns   AssessmentRun[]
   reviewDecisions  ReviewDecision[]
   auditEvents      AuditEvent[]
+  durableJobs      DurableJob[]
 }
 
 model Source {
@@ -159,4 +160,28 @@ model AuditEvent {
 
   @@index([tenantId, runId, createdAt])
   @@index([traceId])
+}
+
+/// Durable background work (AEP-08). Offline runner + Trigger.dev share this table.
+model DurableJob {
+  id             String    @id @default(uuid()) @db.Uuid
+  tenantId       String    @db.Uuid
+  name           String
+  idempotencyKey String
+  status         String
+  attemptCount   Int       @default(0)
+  maxAttempts    Int       @default(3)
+  payload        Json
+  result         Json?
+  lastError      String?
+  failureClass   String?
+  nextAttemptAt  DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, name, idempotencyKey])
+  @@index([status, nextAttemptAt])
+  @@index([tenantId, status])
 }

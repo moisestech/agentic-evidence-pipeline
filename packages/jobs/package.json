@@ -1,0 +1,34 @@
+{
+  "name": "@aep/jobs",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./trigger": "./src/trigger/assess-control.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "bun test tests",
+    "lint": "biome check src tests"
+  },
+  "dependencies": {
+    "@aep/agent": "workspace:*",
+    "@aep/contracts": "workspace:*",
+    "@aep/db": "workspace:*"
+  },
+  "peerDependencies": {
+    "@trigger.dev/sdk": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@trigger.dev/sdk": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@aep/typescript-config": "workspace:*",
+    "bun-types": "^1.2.16",
+    "typescript": "^5.8.3"
+  }
+}

@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted (AEP-08)
 
 ## Context
 
@@ -10,8 +10,8 @@ Duplicate triggers and retries must not create duplicate assessment runs or revi
 
 ## Decision
 
-Derive a stable idempotency key from tenant, rubric version, source revisions, and requested operation. Persist the key with the run; duplicate submissions reuse the existing run.
+Derive a stable idempotency key from tenant, rubric version, source revisions, and requested operation. Persist the key with the run **and** with `DurableJob` (`tenantId` + job name + key). Duplicate submissions reuse the existing run/job.
 
 ## Consequences
 
-Safe demo/replay. Requires careful revision hashing when sources update.
+Safe demo/replay. Requires careful revision hashing when sources update. Offline `DurableRunner` tests cover duplicate enqueue without Trigger cloud.

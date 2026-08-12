@@ -17,7 +17,7 @@ For v0.1, `@aep/agent` implements an **explicit persisted state machine** with t
 - Pending `needs_review` survives process restart via Postgres (`AssessmentRun` + `ControlAssessment` + `AuditEvent`).
 - Idempotency keys prevent duplicate runs.
 
-LangGraph JS remains a compatible future swap behind the same run/resume/decide API. Trigger.dev durable triggers land in AEP-08.
+LangGraph JS remains a compatible future swap behind the same run/resume/decide API. Trigger.dev durable triggers land in AEP-08 via `@aep/jobs` (offline `DurableRunner` + optional Trigger.dev task).
 
 ## Consequences
 

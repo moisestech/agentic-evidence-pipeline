@@ -49,7 +49,8 @@ Not a chatbot. No autonomous third-party writes. Public reference implementation
 | Hybrid retrieval (FTS + vector fusion) | **done** | `@aep/retrieval` + `bun run demo:retrieve` |
 | LangGraph + human interrupt/resume | **done** (persisted state machine) | `@aep/agent` resume/idempotency tests |
 | Citation gate in the run path + review UI | **done** | citation_gate_blocked audit + `apps/web` run inspector |
-| Trigger.dev durability + offline demo CLI | planned | AEP-08 / AEP-11 |
+| Durable jobs (idempotency, retry, DLQ/replay) | **done** | `@aep/jobs` DurableRunner + Trigger.dev adapter docs |
+| Trigger.dev cloud deploy + offline demo CLI | partial / planned | optional peer `@trigger.dev/sdk`; CLI demo AEP-11 |
 | README review-flow demo | **storyboard** | [`demo-review-flow.webp`](docs/assets/demo-review-flow.webp) — live capture later |
 
 ## Why this exists
@@ -171,6 +172,7 @@ stateDiagram-v2
 | Persisted agent + HITL | `packages/agent` | restart/resume test | run inspector timeline |
 | Hybrid retrieval | `packages/retrieval` | RRF unit tests + CI integration | `demo:retrieve` |
 | Run inspector UI | `apps/web` | approve/edit/reject API + screen | `bun run web:dev` |
+| Durable jobs + DLQ/replay | `packages/jobs` | duplicate + failure-injection unit tests | ADR 0006 |
 
 Full claim index: [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md).
 
@@ -202,7 +204,7 @@ ADRs: [`docs/adr/`](docs/adr/).
 
 ## Status and limitations
 
-**Status:** building toward `v0.1.0` (AEP-01–AEP-07 landed).
+**Status:** building toward `v0.1.0` (AEP-01–AEP-08 landed).
 
 This is a public reference implementation—not customer production, SOC 2, or a security certification. No email/SMS, no autonomous final decisions, no private data in fixtures.
 
