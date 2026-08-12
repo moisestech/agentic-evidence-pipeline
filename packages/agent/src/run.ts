@@ -1,6 +1,7 @@
-import type { AepPrismaClient } from "@aep/db";
 import type { AssessmentRunStatus, ControlAssessment } from "@aep/contracts";
+import type { AepPrismaClient } from "@aep/db";
 import { retrieve } from "@aep/retrieval";
+import type { Prisma } from "@prisma/client";
 import {
   applyCitationGate,
   assertTransition,
@@ -47,12 +48,12 @@ async function appendAudit(
     traceId: string;
     eventType: string;
     actorType: string;
-    payload: Record<string, unknown>;
+    payload: Prisma.InputJsonValue;
     previousEventHash: string | null;
   },
 ): Promise<string> {
   const eventHash = hashAuditPayload({
-    ...input.payload,
+    payload: input.payload,
     previousEventHash: input.previousEventHash,
     eventType: input.eventType,
   });
