@@ -1,0 +1,192 @@
+:root {
+  --paper: #f0eee5;
+  --ink: #10110f;
+  --quiet: #8d9088;
+  --cyan: #86d7e2;
+  --coral: #e58b72;
+  --mint: #b6e2ba;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgb(134 215 226 / 22%), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgb(229 139 114 / 14%), transparent),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, sans-serif;
+}
+
+a {
+  color: var(--ink);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+code,
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.brand {
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 0 0 12px;
+}
+
+.lede {
+  color: var(--quiet);
+  max-width: 560px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.quiet {
+  color: var(--quiet);
+}
+
+.ink {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.body {
+  line-height: 1.5;
+}
+
+.body.tight {
+  margin: 6px 0 0;
+}
+
+.primary {
+  margin-top: 24px;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+}
+
+.primary:disabled {
+  opacity: 0.6;
+}
+
+.error {
+  color: var(--coral);
+  margin-top: 16px;
+}
+
+.meta {
+  margin-top: 0;
+}
+
+.block {
+  margin-top: 28px;
+}
+
+.rule {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 16px 0;
+}
+
+.chips {
+  margin-top: 12px;
+}
+
+.chip {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  color: var(--ink);
+}
+
+.chip.cyan {
+  background: var(--cyan);
+}
+
+.chip.coral {
+  background: var(--coral);
+}
+
+.coral-text {
+  color: var(--coral);
+  margin-top: 12px;
+}
+
+.evidence {
+  border-top: 1px solid var(--quiet);
+  padding: 12px 0;
+}
+
+.comment {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  font: inherit;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.actions button {
+  padding: 10px 14px;
+  border: 1px solid var(--ink);
+}
+
+.actions button:disabled {
+  opacity: 0.6;
+}
+
+.mint {
+  background: var(--mint);
+}
+
+.cyan-btn {
+  background: var(--cyan);
+}
+
+.coral-btn {
+  background: var(--coral);
+}
+
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timeline li {
+  border-top: 1px solid var(--quiet);
+  padding: 8px 0;
+  font-size: 13px;
+}

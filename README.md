@@ -1,4 +1,4 @@
-<!-- README: case-study shell. Demo WebPs land only after real recordings exist — see docs/ASSETS.md. -->
+<!-- README: case-study shell. Storyboard WebPs shipped with AEP-07; live captures replace later — see docs/ASSETS.md. -->
 
 <div align="center">
   <img src="docs/assets/aep-mark.svg" alt="Agentic Evidence Pipeline mark: cited evidence nodes resolving into an approved decision" width="88" />
@@ -21,7 +21,9 @@ A stateful TypeScript reference implementation that turns public or synthetic so
 
 ![Status](https://img.shields.io/badge/status-building_v0.1-8D9088)
 ![CI](https://github.com/moisestech/agentic-evidence-pipeline/actions/workflows/verify.yml/badge.svg)
-![Offline demo](https://img.shields.io/badge/demo-planned-8D9088)
+![Offline demo](https://img.shields.io/badge/demo-run_inspector-B6E2BA)
+
+<img src="docs/assets/demo-review-flow.webp" alt="Storyboard: needs_review with coral unsupported citation, approve action, then append-only audit timeline" width="720" />
 
 </div>
 
@@ -46,9 +48,9 @@ Not a chatbot. No autonomous third-party writes. Public reference implementation
 | Fixture connectors + normalize/hash | **done** | `@aep/contracts` / `@aep/connectors` tests |
 | Hybrid retrieval (FTS + vector fusion) | **done** | `@aep/retrieval` + `bun run demo:retrieve` |
 | LangGraph + human interrupt/resume | **done** (persisted state machine) | `@aep/agent` resume/idempotency tests |
-| Citation gate in the run path + review UI | **gate done** / UI next | citation_gate_blocked audit + AEP-07 |
+| Citation gate in the run path + review UI | **done** | citation_gate_blocked audit + `apps/web` run inspector |
 | Trigger.dev durability + offline demo CLI | planned | AEP-08 / AEP-11 |
-| Recorded README demo loop | planned | after behavior exists — [ASSETS.md](docs/ASSETS.md) |
+| README review-flow demo | **storyboard** | [`demo-review-flow.webp`](docs/assets/demo-review-flow.webp) — live capture later |
 
 ## Why this exists
 
@@ -110,6 +112,8 @@ sequenceDiagram
 
 The system does not “repair” unsupported claims with invented prose. It returns `insufficient_evidence` or routes to review.
 
+![Invalid citation storyboard: coral unsupported evidence ID and needs_review actions](docs/assets/demo-invalid-citation.webp)
+
 ## Run it locally
 
 **Requirements:** Bun 1.2+, Docker (for Postgres). No model-provider credential for offline unit tests.
@@ -132,7 +136,8 @@ Without Docker, `bun run verify` still runs format/lint/typecheck/unit tests; DB
 | --- | --- |
 | `bun run verify` | Format, lint, typecheck, tests (CI gate) |
 | `bun run demo:retrieve` | Seed fixtures and print lexical/vector/hybrid hits (needs Docker DB) |
-| `bun run demo` | Full offline review flow — **not implemented yet** |
+| `bun run web:dev` | Run inspector UI on :3010 (needs Docker DB + migrate) |
+| `bun run demo` | Full offline CLI review flow — **AEP-11** |
 | `bun run eval:offline` | Golden-set harness — **AEP-09** |
 
 ## Run lifecycle
@@ -162,9 +167,10 @@ stateDiagram-v2
 | Workspace quality gate | root + turbo | `bun run verify` / CI | Actions badge |
 | Tenant-scoped DB | `packages/db` | tenant unit + integration tests | migrations |
 | Fixture connectors + hash | `packages/connectors` | connector contract tests | `fixtures/` |
-| Citation allowlist helper | `packages/contracts` | citation-gate unit tests | failure demo (later) |
-| Persisted agent + HITL | `packages/agent` | restart/resume test | run timeline (later) |
+| Citation allowlist helper | `packages/contracts` | citation-gate unit tests | [`demo-invalid-citation.webp`](docs/assets/demo-invalid-citation.webp) |
+| Persisted agent + HITL | `packages/agent` | restart/resume test | run inspector timeline |
 | Hybrid retrieval | `packages/retrieval` | RRF unit tests + CI integration | `demo:retrieve` |
+| Run inspector UI | `apps/web` | approve/edit/reject API + screen | `bun run web:dev` |
 
 Full claim index: [`docs/EVIDENCE_LEDGER.md`](docs/EVIDENCE_LEDGER.md).
 
@@ -177,8 +183,8 @@ README packaging checklist (what exists vs what to capture next):
 | Mark / lockup | `docs/assets/aep-mark.svg`, `aep-lockup.svg` | **done** |
 | Social preview | `docs/assets/social-preview.png` | **done** |
 | Architecture Mermaid | in README / ARCHITECTURE | **done** |
-| Demo review loop | `docs/assets/demo-review-flow.webp` | after offline demo |
-| Invalid-citation clip | `docs/assets/demo-invalid-citation.webp` | after citation gate + UI |
+| Demo review loop | `docs/assets/demo-review-flow.webp` | **storyboard done** (live capture later) |
+| Invalid-citation clip | `docs/assets/demo-invalid-citation.webp` | **storyboard done** |
 | Run inspector shot | `docs/assets/run-inspector.png` | after AEP-10 |
 | Eval report shot | `docs/assets/eval-offline-report.png` | after AEP-09 |
 
@@ -196,7 +202,7 @@ ADRs: [`docs/adr/`](docs/adr/).
 
 ## Status and limitations
 
-**Status:** building toward `v0.1.0` (AEP-01–AEP-04 landed).
+**Status:** building toward `v0.1.0` (AEP-01–AEP-07 landed).
 
 This is a public reference implementation—not customer production, SOC 2, or a security certification. No email/SMS, no autonomous final decisions, no private data in fixtures.
 

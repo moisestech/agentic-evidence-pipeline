@@ -10,7 +10,7 @@ Mapped from Miami Applied AI / FDE repo specs. Implement one numbered task at a 
 | AEP-04 | done | Lexical/vector retrieval + fusion | retrieval unit + CI integration |
 | AEP-05 | done | Persisted state graph + interrupt/resume | restart/resume integration test |
 | AEP-06 | done | Typed output, citation gate, fake invalid citation | malformed/citation failure tests |
-| AEP-07 | pending | Review UI + audit events | approve/edit/reject E2E |
+| AEP-07 | done | Review UI + audit events | `apps/web` run inspector + storyboard demos |
 | AEP-08 | pending | Trigger.dev, idempotency, DLQ/replay | duplicate + failure-injection tests |
 | AEP-09 | pending | Prompt registry + offline/live eval | versioned offline report |
 | AEP-10 | pending | Traces, cost/latency, run inspector | aggregation tests |

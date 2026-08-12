@@ -12,6 +12,7 @@
     "doctor": "bun scripts/doctor.ts",
     "demo": "bun scripts/demo.ts",
     "demo:retrieve": "bun scripts/demo-retrieve.ts",
+    "web:dev": "bun run --filter @aep/web dev",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "turbo run lint",
