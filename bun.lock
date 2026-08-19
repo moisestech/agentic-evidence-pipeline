@@ -49,6 +49,7 @@
       "dependencies": {
         "@aep/contracts": "workspace:*",
         "@aep/db": "workspace:*",
+        "@aep/prompts": "workspace:*",
         "@aep/retrieval": "workspace:*",
       },
       "devDependencies": {
@@ -99,7 +100,10 @@
       "name": "@aep/evals",
       "version": "0.0.1",
       "dependencies": {
+        "@aep/agent": "workspace:*",
         "@aep/contracts": "workspace:*",
+        "@aep/prompts": "workspace:*",
+        "@aep/retrieval": "workspace:*",
       },
       "devDependencies": {
         "@aep/typescript-config": "workspace:*",
