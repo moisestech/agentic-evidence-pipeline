@@ -1,6 +1,6 @@
 # Architecture
 
-**Status:** target architecture for `v0.1`. Components named below are planned package boundaries; treat unimplemented paths as design, not shipped code.
+**Status:** current local demo plus explicitly labeled future targets. See the evidence ledger for verification boundaries.
 
 ## Overview
 
@@ -8,13 +8,27 @@
 flowchart TD
     A["Public / synthetic sources"] --> B["Normalize + version evidence"]
     B --> C["Postgres FTS + pgvector"]
-    C --> D["Typed LangGraph assessment"]
+    C --> D["Typed fake-model assessment"]
     D --> E["Citation + policy gate"]
     E --> F["Human review"]
-    F --> G["Append-only audit trail"]
+    F --> G["Stored review + audit event"]
 ```
 
-## Container view (planned)
+## Current call path
+
+```mermaid
+flowchart TD
+    UI["Next.js review UI"] --> Routes["Next.js route handlers"]
+    Routes --> Agent["Persisted TypeScript workflow"]
+    Agent --> Retrieval["FTS + vector retrieval"]
+    Retrieval --> DB["Postgres + pgvector"]
+    Agent --> DB
+    Agent --> Gate["Deterministic review policy"]
+```
+
+The web app calls the agent package through Next.js routes. It does not currently route through NestJS or LangGraph. Authentication is not implemented; use synthetic data locally.
+
+## Future container view (not current wiring)
 
 ```mermaid
 flowchart LR
@@ -54,7 +68,7 @@ stateDiagram-v2
     assessing --> validating
     validating --> needs_review: uncertain / adverse / approval required
     validating --> failed: invalid and unrecoverable
-    needs_review --> approved
+    needs_review --> approved: eligible evidence only
     needs_review --> rejected
     approved --> finalized
     rejected --> finalized
@@ -62,7 +76,7 @@ stateDiagram-v2
     finalized --> [*]
 ```
 
-Invalid transitions fail with a typed domain error. Restarting the API or worker must not lose a pending review.
+Invalid transitions throw an error. Pending review is stored in Postgres; the existing readback test is not independent process-restart verification. Approval and edit-and-approve reject unresolved or absent evidence. Rejection may finalize a rejected disposition. Decision writes run in a transaction; authenticated access and evidence repair remain separate work.
 
 ## Evidence lineage
 
@@ -70,7 +84,7 @@ Invalid transitions fail with a typed domain error. Restarting the API or worker
 flowchart LR
     S["Source revision"] --> E["EvidenceItem"]
     E --> R["Retrieval result"]
-    R --> C["Sentence citation"]
+    R --> C["Assessment evidence IDs"]
     C --> D["Review decision"]
     D --> A["Audit event"]
 ```
