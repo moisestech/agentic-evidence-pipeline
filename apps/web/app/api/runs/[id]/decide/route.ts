@@ -5,6 +5,7 @@ import { requireDb } from "@/lib/db";
 type Params = { params: Promise<{ id: string }> };
 
 export async function POST(request: Request, { params }: Params) {
+  let db: ReturnType<typeof requireDb> | undefined;
   try {
     const { id } = await params;
     const body = (await request.json()) as {
@@ -13,7 +14,7 @@ export async function POST(request: Request, { params }: Params) {
       comment?: string;
       editedSummary?: string;
     };
-    const db = requireDb();
+    db = requireDb();
     const result = await decideReview(db, {
       runId: id,
       tenantId: body.tenantId,
@@ -22,10 +23,11 @@ export async function POST(request: Request, { params }: Params) {
       ...(body.comment !== undefined ? { comment: body.comment } : {}),
       ...(body.editedSummary !== undefined ? { editedSummary: body.editedSummary } : {}),
     });
-    await db.$disconnect();
     return NextResponse.json(result);
   } catch (error) {
     const message = error instanceof Error ? error.message : "decide_failed";
     return NextResponse.json({ error: message }, { status: 400 });
+  } finally {
+    await db?.$disconnect();
   }
 }

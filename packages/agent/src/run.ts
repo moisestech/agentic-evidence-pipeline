@@ -4,6 +4,7 @@ import { retrieve } from "@aep/retrieval";
 import type { Prisma } from "@prisma/client";
 import {
   applyCitationGate,
+  assertReviewDecision,
   assertTransition,
   fakeAssessControl,
   hashAuditPayload,
@@ -41,7 +42,7 @@ async function setStatus(
 }
 
 async function appendAudit(
-  db: AepPrismaClient,
+  db: Pick<AepPrismaClient, "auditEvent">,
   input: {
     runId: string;
     tenantId: string;
@@ -265,66 +266,79 @@ export async function decideReview(
     editedSummary?: string;
   },
 ): Promise<RunAssessmentResult> {
-  const run = await db.assessmentRun.findUniqueOrThrow({
-    where: { id: input.runId },
-    include: { controlAssessments: true },
-  });
-  if (run.status !== "needs_review") {
-    throw new Error(`invalid_transition:${run.status}->review_decision`);
-  }
-  const assessment = run.controlAssessments[0];
-  if (!assessment) {
-    throw new Error("missing_assessment");
-  }
-
-  const beforeHash = hashAuditPayload(assessment);
-  let afterSummary = assessment.summary;
-  if (input.decision === "edit" && input.editedSummary) {
-    afterSummary = input.editedSummary;
-    await db.controlAssessment.update({
-      where: { id: assessment.id },
-      data: { summary: afterSummary },
+  await db.$transaction(async (tx) => {
+    const run = await tx.assessmentRun.findUniqueOrThrow({
+      where: { id: input.runId },
+      include: { controlAssessments: true },
     });
-  }
-  const afterHash = hashAuditPayload({ ...assessment, summary: afterSummary });
+    if (run.tenantId !== input.tenantId) {
+      throw new Error("tenant_mismatch");
+    }
+    if (run.status !== "needs_review") {
+      throw new Error(`invalid_transition:${run.status}->review_decision`);
+    }
+    const assessment = run.controlAssessments[0];
+    if (!assessment) {
+      throw new Error("missing_assessment");
+    }
+    assertReviewDecision(input.decision, assessment);
+    if (
+      input.decision === "edit" &&
+      (typeof input.editedSummary !== "string" || !input.editedSummary.trim())
+    ) {
+      throw new Error("edited_summary_required");
+    }
 
-  await db.reviewDecision.create({
-    data: {
+    const next: AssessmentRunStatus = input.decision === "reject" ? "rejected" : "approved";
+    assertTransition("needs_review", next);
+    const claimed = await tx.assessmentRun.updateMany({
+      where: { id: run.id, tenantId: input.tenantId, status: "needs_review" },
+      data: { status: next, completedAt: new Date() },
+    });
+    if (claimed.count !== 1) throw new Error("review_already_decided");
+
+    const beforeHash = hashAuditPayload(assessment);
+    let afterSummary = assessment.summary;
+    if (input.decision === "edit" && input.editedSummary) {
+      afterSummary = input.editedSummary;
+      await tx.controlAssessment.update({
+        where: { id: assessment.id },
+        data: { summary: afterSummary },
+      });
+    }
+    const afterHash = hashAuditPayload({ ...assessment, summary: afterSummary });
+
+    await tx.reviewDecision.create({
+      data: {
+        runId: run.id,
+        tenantId: input.tenantId,
+        assessmentId: assessment.id,
+        reviewerId: input.reviewerId,
+        decision: input.decision,
+        beforeHash,
+        afterHash,
+        comment: input.comment ?? null,
+      },
+    });
+
+    assertTransition(next, "finalized");
+    await tx.assessmentRun.update({
+      where: { id: run.id },
+      data: { status: "finalized" },
+    });
+
+    await appendAudit(tx, {
       runId: run.id,
       tenantId: input.tenantId,
-      assessmentId: assessment.id,
-      reviewerId: input.reviewerId,
-      decision: input.decision,
-      beforeHash,
-      afterHash,
-      comment: input.comment ?? null,
-    },
+      traceId: run.traceId,
+      eventType: `review_${input.decision}`,
+      actorType: "human",
+      payload: {
+        reviewerId: input.reviewerId,
+        decision: input.decision,
+      },
+      previousEventHash: null,
+    });
   });
-
-  const next: AssessmentRunStatus = input.decision === "reject" ? "rejected" : "approved";
-  assertTransition("needs_review", next);
-  await db.assessmentRun.update({
-    where: { id: run.id },
-    data: { status: next, completedAt: new Date() },
-  });
-  assertTransition(next, "finalized");
-  await db.assessmentRun.update({
-    where: { id: run.id },
-    data: { status: "finalized" },
-  });
-
-  await appendAudit(db, {
-    runId: run.id,
-    tenantId: input.tenantId,
-    traceId: run.traceId,
-    eventType: `review_${input.decision}`,
-    actorType: "human",
-    payload: {
-      reviewerId: input.reviewerId,
-      decision: input.decision,
-    },
-    previousEventHash: null,
-  });
-
-  return resumeRun(db, run.id);
+  return resumeRun(db, input.runId);
 }
