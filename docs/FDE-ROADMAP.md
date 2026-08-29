@@ -1,5 +1,14 @@
 # FDE lane — consulting / governance overlay
 
+```mermaid
+flowchart LR
+  evidence[sources] --> retrieve[hybridRetrieve]
+  retrieve --> assess[typedAssessment]
+  assess --> gate[citationFailClosed]
+  gate --> human[humanReview]
+  human --> audit[appendOnlyTrail]
+```
+
 This repo is **not** a second agent product. It is the TypeScript inspect surface for consulting and Deloitte-shaped FDE conversations: cited assessments, fail-closed policy, persisted interrupt, durable jobs.
 
 Sister repos: [agentic-ops](https://github.com/moisestech/agentic-ops) (Python runtime + MCP + engagement docs) · [flora-field-kit](https://github.com/moisestech/flora-field-kit) · [comfyui-output-provenance](https://github.com/moisestech/comfyui-output-provenance). Spine: [agentic-ops/docs/FDE-ROADMAP.md](https://github.com/moisestech/agentic-ops/blob/main/docs/FDE-ROADMAP.md).
