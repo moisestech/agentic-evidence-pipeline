@@ -10,6 +10,7 @@
 A stateful TypeScript reference implementation that turns public or synthetic source material into typed, cited assessments—then pauses for human approval and preserves the complete decision trail.
 
 [30-second](#the-30-second-version) ·
+[FDE roadmap](docs/FDE-ROADMAP.md) ·
 [Status](#what-works-today-vs-planned) ·
 [Architecture](#architecture) ·
 [When the model is wrong](#what-happens-when-the-model-is-wrong) ·

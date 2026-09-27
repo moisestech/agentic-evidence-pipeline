@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T19:48:55.043Z",
+  "generatedAt": "2026-08-12T19:51:38.822Z",
   "environment": "offline-fake-provider",
   "disclaimer": "Harness metrics from the deterministic fake provider and in-memory hybrid retrieval. Not a live-model quality benchmark.",
   "promptId": "assess-control",

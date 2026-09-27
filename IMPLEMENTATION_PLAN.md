@@ -17,6 +17,8 @@ Mapped from Miami Applied AI / FDE repo specs. Implement one numbered task at a 
 | AEP-11 | pending | Full bootstrap/doctor/demo + ops | fresh-clone record |
 | AEP-12 | pending | Demo recording + evidence ledger + `v0.1.0` | release tag |
 
+FDE lane and sister repos: [`docs/FDE-ROADMAP.md`](docs/FDE-ROADMAP.md).
+
 ## AEP-01–AEP-03 notes
 
 - Shared contracts live in `@aep/contracts` (Zod + citation allowlist + content hash helpers).
