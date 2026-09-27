@@ -155,3 +155,11 @@ crm,ops,no
 }
 
 export const PACKAGE_STATUS = "connectors-v0.0.1" as const;
+
+export { stageAirtableUpsert } from "./airtable-stage";
+export type { ParsedMesh } from "./fabrication-parse";
+export {
+  checkFabricationConstraints,
+  detectFabricationFormat,
+  parseFabricationFile,
+} from "./fabrication-parse";

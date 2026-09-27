@@ -21,7 +21,8 @@
     "db:generate": "bun run --filter @aep/db db:generate",
     "db:migrate": "bun run --filter @aep/db db:migrate",
     "db:up": "docker compose up -d postgres",
-    "verify": "bun run db:generate && bun run format:check && bun run lint && bun run typecheck && bun run test",
+    "check:pii": "bun scripts/check-fixtures-pii.ts",
+    "verify": "bun run db:generate && bun run format:check && bun run lint && bun run typecheck && bun run test && bun run check:pii",
     "eval:offline": "bun scripts/eval-offline.ts",
     "eval:live": "bun scripts/eval-live.ts"
   },

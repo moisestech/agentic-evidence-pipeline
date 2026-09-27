@@ -114,4 +114,25 @@ export function findUnsupportedCitations(
   return unsupported;
 }
 
+export type { ClientConsentRecord } from "./consent";
+export { assertFirstJobConsent } from "./consent";
+
 export const PACKAGE_STATUS = "contracts-v0.0.2" as const;
+
+export type {
+  ConstraintFinding,
+  ConstraintResult,
+  FabricationChannel,
+  FabricationJobIntake,
+  OrgConfig,
+  StagedCrmMutation,
+} from "./fabrication";
+export {
+  constraintFindingSchema,
+  DCC_ORG_CONFIG_DRAFT,
+  fabricationChannelSchema,
+  fabricationJobIntakeSchema,
+  orgConfigSchema,
+  stagedCrmMutationSchema,
+  V1_ALLOWED_FORMATS,
+} from "./fabrication";
