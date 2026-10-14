@@ -12,7 +12,9 @@
       "dependsOn": ["^typecheck"]
     },
     "test": {
-      "dependsOn": ["^test"]
+      "dependsOn": ["^test"],
+      "env": ["DATABASE_URL", "AEP_INTEGRATION"],
+      "cache": false
     },
     "dev": {
       "cache": false,

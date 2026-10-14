@@ -25,14 +25,14 @@ describeDb("hybrid retrieval (integration)", () => {
     });
     otherTenantId = other.tenantId;
 
-    // Mark one row excluded on tenant A for visibility filtering
-    const any = await db.evidenceItem.findFirst({ where: { tenantId } });
-    if (any) {
-      await db.evidenceItem.update({
-        where: { id: any.id },
-        data: { visibility: "excluded" },
-      });
-    }
+    // Exclude a known fixture, leaving the digital-readiness document searchable.
+    const excluded = await db.evidenceItem.findFirstOrThrow({
+      where: { tenantId, text: { contains: "HTTPS is enforced" } },
+    });
+    await db.evidenceItem.update({
+      where: { id: excluded.id },
+      data: { visibility: "excluded" },
+    });
   });
 
   afterAll(async () => {
@@ -90,10 +90,21 @@ describeDb("hybrid retrieval (integration)", () => {
       mode: "lexical",
       limit: 10,
     });
+    expect(a.length).toBeGreaterThan(0);
     expect(a.map((h) => h.evidenceId)).toEqual(b.map((h) => h.evidenceId));
   });
 
   test("lexical-only degradation when vectors unavailable", async () => {
+    // plainto_tsquery uses AND: the previous HTTPS/digital/readiness query
+    // spanned different documents and had no lexical match even before failure.
+    const query = "digital readiness";
+    const baseline = await retrieve(db, {
+      tenantId,
+      query,
+      mode: "lexical",
+      visibility: ["public", "staff"],
+    });
+    expect(baseline.length).toBeGreaterThan(0);
     // Clear embeddings for tenant A
     await db.$executeRawUnsafe(
       `UPDATE "EvidenceItem" SET embedding = NULL WHERE "tenantId" = $1::uuid`,
@@ -101,11 +112,13 @@ describeDb("hybrid retrieval (integration)", () => {
     );
     const hits = await retrieve(db, {
       tenantId,
-      query: "HTTPS digital readiness",
+      query,
       mode: "hybrid",
       visibility: ["public", "staff"],
     });
     expect(hits.length).toBeGreaterThan(0);
-    expect(hits.every((h) => h.reason.includes("lexical"))).toBe(true);
+    expect(hits.map((h) => h.evidenceId)).toEqual(baseline.map((h) => h.evidenceId));
+    expect(hits.every((h) => h.reason.includes("degraded_lexical_only"))).toBe(true);
+    expect(hits.every((h) => h.vectorScore === null)).toBe(true);
   });
 });

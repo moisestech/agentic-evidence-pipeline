@@ -40,6 +40,7 @@ export function RunInspector({ params }: { params: Promise<{ id: string }> }) {
   const [data, setData] = useState<RunPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [comment, setComment] = useState("");
+  const [editedSummary, setEditedSummary] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export function RunInspector({ params }: { params: Promise<{ id: string }> }) {
       return;
     }
     setData(json);
+    setEditedSummary(json.assessment?.summary ?? "");
     setError(null);
   }, [runId]);
 
@@ -73,10 +75,7 @@ export function RunInspector({ params }: { params: Promise<{ id: string }> }) {
           tenantId,
           decision,
           comment,
-          editedSummary:
-            decision === "edit"
-              ? `${data?.assessment?.summary ?? ""} (edited by reviewer)`
-              : undefined,
+          editedSummary: decision === "edit" ? editedSummary : undefined,
         }),
       });
       const json = (await res.json()) as { error?: string };
@@ -98,6 +97,11 @@ export function RunInspector({ params }: { params: Promise<{ id: string }> }) {
   }
 
   const unsupported = new Set(data.assessment?.unsupportedClaims ?? []);
+  const approvalBlocked =
+    !data.assessment ||
+    data.assessment.status === "insufficient_evidence" ||
+    data.assessment.evidenceIds.length === 0 ||
+    unsupported.size > 0;
 
   return (
     <main className="shell">
@@ -153,7 +157,25 @@ export function RunInspector({ params }: { params: Promise<{ id: string }> }) {
       {data.status === "needs_review" ? (
         <section className="block">
           <h2>Human review</h2>
+          {approvalBlocked ? (
+            <p className="coral-text" role="status">
+              Unresolved evidence blocks approval and editing. Reject this assessment, or leave it
+              pending while the evidence is investigated. A comment cannot override the citation
+              gate.
+            </p>
+          ) : (
+            <label>
+              Revised summary (for Edit and approve)
+              <textarea
+                value={editedSummary}
+                onChange={(e) => setEditedSummary(e.target.value)}
+                rows={3}
+                className="comment"
+              />
+            </label>
+          )}
           <textarea
+            aria-label="Reviewer comment"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Reviewer comment"
@@ -164,7 +186,7 @@ export function RunInspector({ params }: { params: Promise<{ id: string }> }) {
             <button
               type="button"
               className="mint"
-              disabled={busy}
+              disabled={busy || approvalBlocked || !tenantId}
               onClick={() => void decide("approve")}
             >
               Approve
@@ -172,15 +194,15 @@ export function RunInspector({ params }: { params: Promise<{ id: string }> }) {
             <button
               type="button"
               className="cyan-btn"
-              disabled={busy}
+              disabled={busy || approvalBlocked || !tenantId || !editedSummary.trim()}
               onClick={() => void decide("edit")}
             >
-              Edit
+              Edit and approve
             </button>
             <button
               type="button"
               className="coral-btn"
-              disabled={busy}
+              disabled={busy || !tenantId}
               onClick={() => void decide("reject")}
             >
               Reject

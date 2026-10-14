@@ -38,7 +38,7 @@ export function applyCitationGate(
   allowlistedEvidenceIds: ReadonlySet<string>,
 ): { assessment: ControlAssessment; blocked: boolean } {
   const unsupported = findUnsupportedCitations(assessment, allowlistedEvidenceIds);
-  if (unsupported.length === 0) {
+  if (unsupported.length === 0 && assessment.evidenceIds.length > 0) {
     return { assessment, blocked: false };
   }
   return {
@@ -51,6 +51,24 @@ export function applyCitationGate(
       confidence: Math.min(assessment.confidence, 0.4),
     },
   };
+}
+
+/** Review authorizes a disposition; it does not repair missing evidence. */
+export function assertReviewDecision(
+  decision: unknown,
+  assessment: Pick<ControlAssessment, "evidenceIds" | "unsupportedClaims"> & { status: string },
+): asserts decision is "approve" | "edit" | "reject" {
+  if (decision !== "approve" && decision !== "edit" && decision !== "reject") {
+    throw new Error("invalid_review_decision");
+  }
+  if (
+    decision !== "reject" &&
+    (assessment.status === "insufficient_evidence" ||
+      assessment.evidenceIds.length === 0 ||
+      assessment.unsupportedClaims.length > 0)
+  ) {
+    throw new Error("unresolved_evidence");
+  }
 }
 
 const ALLOWED: Record<AssessmentRunStatus, AssessmentRunStatus[]> = {
